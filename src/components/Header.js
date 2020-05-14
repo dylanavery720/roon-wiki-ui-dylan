@@ -3,13 +3,18 @@ import { Link, Redirect } from "react-router-dom";
 import { Tabs, Row, Col, Input } from "antd";
 const { TabPane } = Tabs;
 
-export default function Header() {
+export default function Header(props) {
   const [searchValue, setSearchValue] = React.useState("");
   const { Search } = Input;
 
   return (
     <>
-      <Row className="Header-row" gutter={8}>
+      <Row
+        className={
+          props.coloradoMode ? "coloradoHeader Header-row" : "Header-row"
+        }
+        gutter={8}
+      >
         <Col span={8}>
           <Tabs type="card" animated>
             <TabPane

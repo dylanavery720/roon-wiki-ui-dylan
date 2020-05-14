@@ -5,8 +5,8 @@
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+  text-align: center;
+  margin: 20px 40px;
 }
 
 .Header-row {
@@ -59,10 +59,15 @@ h2 {
   margin-left: 160px; /* Same as the width of the sidebar */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.coloradoHeader {
+  background-color: #7a853b;
+}
+
+.coloradoSideNav {
+  background-color: #7a853b;
+}
+.coloradoSideNav a {
+  color: black;
 }
 
 .App-header {

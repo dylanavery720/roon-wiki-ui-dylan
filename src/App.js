@@ -1,8 +1,8 @@
 import React from "react";
-// import logo from './logo.svg';
+import COFlag from "./assets/COFlag.png";
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
-
+import { Switch as AntSwitch } from "antd";
 import Index from "./pages/Index";
 import Article from "./pages/Article";
 import Header from "./components/Header";
@@ -16,17 +16,28 @@ function App(props) {
 }
 
 function AppRouter({ client }) {
+  const [coloradoMode, setColoradoMode] = React.useState(false);
+
   return (
     <div>
-      <div className="sidenav">
+      <div className={coloradoMode ? "sidenav coloradoSideNav " : "sidenav"}>
+        <img
+          height="50px"
+          width="80px"
+          className="App-logo"
+          alt="coflag"
+          src={COFlag}
+        ></img>
         <a href="#">About</a>
         <a href="#">Services</a>
         <a href="#">Clients</a>
         <a href="#">Contact</a>
+        Colorado Mode:{" "}
+        <AntSwitch onChange={(checked) => setColoradoMode(checked)}></AntSwitch>
       </div>
 
-      <div className="main">
-        <Header></Header>
+      <div className={coloradoMode ? "main colorado" : "main"}>
+        <Header coloradoMode={coloradoMode}></Header>
         {/* <Sidebar></Sidebar> */}
         <>
           <Route path="/" exact component={Index} />
