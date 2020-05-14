@@ -20,8 +20,18 @@ export default function Header() {
                 </Link>
               }
             ></TabPane>
-            <TabPane key={2} tab={`Talk`}></TabPane>
+            <TabPane
+              key={2}
+              tab={
+                <Link to={`/talk/${searchValue}`}>
+                  <h2>Talk</h2>
+                </Link>
+              }
+            ></TabPane>
           </Tabs>
+        </Col>
+        <Col span={8}></Col>
+        <Col span={8}>
           <Search
             placeholder="input search text"
             enterButton="Search"
@@ -29,10 +39,8 @@ export default function Header() {
               setSearchValue(value);
             }}
           ></Search>
-          {searchValue.length > 1 && (
-            <Redirect to={`/articles/${searchValue}`} />
-          )}
         </Col>
+        {searchValue.length > 1 && <Redirect to={`/articles/${searchValue}`} />}
       </Row>
     </>
   );

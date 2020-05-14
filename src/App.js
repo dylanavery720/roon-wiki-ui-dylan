@@ -18,15 +18,24 @@ function App(props) {
 function AppRouter({ client }) {
   return (
     <div>
-      <Header></Header>
-      {/* <Sidebar></Sidebar> */}
-      <>
-        <Route path="/" exact component={Index} />
-        {/* <Route path="/articles/" component={() => <Article />} /> */}
-        <Switch>
-          <Route path="/articles/:topic" children={<Article />} />
-        </Switch>
-      </>
+      <div className="sidenav">
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Clients</a>
+        <a href="#">Contact</a>
+      </div>
+
+      <div className="main">
+        <Header></Header>
+        {/* <Sidebar></Sidebar> */}
+        <>
+          <Route path="/" exact component={Index} />
+          {/* <Route path="/articles/" component={() => <Article />} /> */}
+          <Switch>
+            <Route path="/articles/:topic" children={<Article />} />
+          </Switch>
+        </>
+      </div>
     </div>
   );
 }

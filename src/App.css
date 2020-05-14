@@ -10,27 +10,53 @@
 }
 
 .Header-row {
-  padding: 8px;
-  justify-content: "space-between";
-  color: white;
+  justify-content: space-between;
+  background-color: #f6f6f6;
+  align-items: center;
 }
 
 .Header-row:hover {
-  padding: 8px;
-  justify-content: "space-between";
   color: #ffd100;
 }
 
 .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab-active a h2 {
   color: #1890ff;
   background: #fff;
-  border-color: #f0f0f0;
-  border-bottom: 1px solid #fff;
+  /* border-color: #f0f0f0;
+  border-bottom: 1px solid #fff; */
+}
+
+h2 {
+  margin: 0;
 }
 
 .ant-tabs-bar {
   margin: 0;
   border-bottom: 0px;
+}
+
+.sidenav {
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #f6f6f6;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+.main {
+  margin-left: 160px; /* Same as the width of the sidebar */
 }
 
 @media (prefers-reduced-motion: no-preference) {
