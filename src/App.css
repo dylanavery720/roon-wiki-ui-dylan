@@ -1,10 +1,38 @@
 .App {
   text-align: center;
+  background-color: #245d38;
+  color: #f1f2ee;
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.Header-row {
+  padding: 8px;
+  justify-content: "space-between";
+  /* background-color: #245d38; */
+  color: white;
+}
+
+.Header-row:hover {
+  padding: 8px;
+  justify-content: "space-between";
+  /* background-color: #245d38; */
+  color: #ffd100;
+}
+
+.ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab-active a h2 {
+  color: #1890ff;
+  background: #fff;
+  border-color: #f0f0f0;
+  border-bottom: 1px solid #fff;
+}
+
+.ant-tabs-bar {
+  margin: 0;
+  border-bottom: 0px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -14,14 +42,14 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #475841;
+  color: #f1f2ee;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-link {

@@ -1,24 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+// import logo from './logo.svg';
+import "./App.css";
+import { withApollo } from "react-apollo";
+import { Route, Switch } from "react-router-dom";
 
-function App() {
+import Index from "./pages/Index";
+import Article from "./pages/Article";
+import Header from "./components/Header";
+
+function App(props) {
+  const RouterApp = withApollo(AppRouter);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <section className="wrapper">
+      <RouterApp></RouterApp>
+    </section>
+  );
+}
+
+function AppRouter({ client }) {
+  return (
+    <div>
+      <Header></Header>
+      {/* <Sidebar></Sidebar> */}
+      <>
+        <Route path="/" exact component={Index} />
+        {/* <Route path="/articles/" component={() => <Article />} /> */}
+        {/* <Route path="/tickets/" component={() => <Tickets />} /> */}
+        <Switch>
+          <Route path="/articles/:id" children={<Article />} />
+        </Switch>
+      </>
     </div>
   );
 }
