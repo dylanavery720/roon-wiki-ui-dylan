@@ -24,7 +24,7 @@ function AppRouter({ client }) {
         <Route path="/" exact component={Index} />
         {/* <Route path="/articles/" component={() => <Article />} /> */}
         <Switch>
-          <Route path="/articles/:id" children={<Article />} />
+          <Route path="/articles/:topic" children={<Article />} />
         </Switch>
       </>
     </div>
