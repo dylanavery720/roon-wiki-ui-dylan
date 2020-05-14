@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { getContent } from "../requests/requests";
 
 export default function Article(props) {
   const [content, setContent] = React.useState(null);
+  const [oldTopic, setOldTopic] = React.useState(null);
 
   let { topic } = useParams();
 
@@ -12,7 +13,8 @@ export default function Article(props) {
   });
 
   const init = async () => {
-    if (!content) {
+    if (topic !== oldTopic) {
+      setOldTopic(topic);
       const newContent = await getContent(topic);
       setContent(newContent.results[0]);
     }
@@ -21,6 +23,14 @@ export default function Article(props) {
   return (
     <>
       <div>
+        {!content && topic && (
+          <div>
+            <span> The page "{oldTopic}"" does not exist, </span>
+            <Link to={`/create/${oldTopic}`}>
+              <span>you can CREATE it by clicking here.</span>
+            </Link>
+          </div>
+        )}
         <h1>
           <u>{content && content.topic}</u>
         </h1>
