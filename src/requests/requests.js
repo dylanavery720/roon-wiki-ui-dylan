@@ -16,10 +16,8 @@ export async function parseJSON(response) {
   return response.json();
 }
 
-// export async function getLiveEmailSearchMessagesRequest(email, msgids) {
-//   const body = {};
-//   body[email] = msgids;
-//   const response = await fetch(`/Hubble/rest/saas/${oauthID}/gmail/messages`, {
+// export async function postContent() {
+//   const response = await fetch(`http://localhost:8080/articles`, {
 //     method: "POST",
 //     accept: "application/json",
 //     headers: { "Content-Type": "application/json" },

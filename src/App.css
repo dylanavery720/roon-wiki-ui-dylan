@@ -12,14 +12,12 @@
 .Header-row {
   padding: 8px;
   justify-content: "space-between";
-  /* background-color: #245d38; */
   color: white;
 }
 
 .Header-row:hover {
   padding: 8px;
   justify-content: "space-between";
-  /* background-color: #245d38; */
   color: #ffd100;
 }
 
