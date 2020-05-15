@@ -37,10 +37,19 @@ export async function putContent(topic, body) {
 }
 
 export async function getContent(topic) {
-  const phishing = await fetch(`http://localhost:8080/articles/${topic}`, {
+  const response = await fetch(`http://localhost:8080/articles/${topic}`, {
     accept: "application/json",
   });
-  const checkedStatus = await checkStatus(phishing);
+  const checkedStatus = await checkStatus(response);
+  let parsedJson = await parseJSON(checkedStatus);
+  return parsedJson;
+}
+
+export async function getHistory(topic) {
+  const response = await fetch(`http://localhost:8080/edits/${topic}`, {
+    accept: "application/json",
+  });
+  const checkedStatus = await checkStatus(response);
   let parsedJson = await parseJSON(checkedStatus);
   return parsedJson;
 }

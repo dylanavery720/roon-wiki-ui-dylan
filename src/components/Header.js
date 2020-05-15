@@ -37,6 +37,24 @@ export default function Header(props) {
         </Col>
         <Col span={8}></Col>
         <Col span={8}>
+          <Tabs type="card" animated>
+            <TabPane
+              key={1}
+              tab={
+                <Link to={`/articles/${searchValue}`}>
+                  <h2>Read</h2>
+                </Link>
+              }
+            ></TabPane>
+            <TabPane
+              key={2}
+              tab={
+                <Link to={`/history/${searchValue}`}>
+                  <h2>History</h2>
+                </Link>
+              }
+            ></TabPane>
+          </Tabs>
           <Search
             placeholder="input search text"
             enterButton="Search"

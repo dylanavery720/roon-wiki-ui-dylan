@@ -6,6 +6,7 @@ import { Switch as AntSwitch } from "antd";
 import Index from "./pages/Index";
 import Article from "./pages/Article";
 import Create from "./pages/Create";
+import History from "./pages/History";
 import Header from "./components/Header";
 
 function App(props) {
@@ -46,6 +47,7 @@ function AppRouter({ client }) {
           <Switch>
             <Route path="/articles/:topic" children={<Article />} />
             <Route path="/create/:topic" component={() => <Create />} />
+            <Route path="/history/:topic" component={() => <History />} />
           </Switch>
         </>
       </div>
