@@ -45,7 +45,7 @@ export default function Header(props) {
             }}
           ></Search>
         </Col>
-        {searchValue.length > 1 && <Redirect to={`/articles/${searchValue}`} />}
+        {searchValue.length > 0 && <Redirect to={`/articles/${searchValue}`} />}
       </Row>
     </>
   );

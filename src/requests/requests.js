@@ -16,17 +16,25 @@ export async function parseJSON(response) {
   return response.json();
 }
 
-// export async function postContent() {
-//   const response = await fetch(`http://localhost:8080/articles`, {
-//     method: "POST",
-//     accept: "application/json",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify(body),
-//   });
-//   const checkedStatus = await checkStatus(response);
-//   const parsedJson = await parseJSON(checkedStatus);
-//   return parsedJson;
-// }
+export async function postContent(body) {
+  const response = await fetch(`http://localhost:8080/articles`, {
+    method: "POST",
+    accept: "application/json",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  return response;
+}
+
+export async function putContent(topic, body) {
+  const response = await fetch(`http://localhost:8080/articles/${topic}`, {
+    method: "PUT",
+    accept: "application/json",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  return response;
+}
 
 export async function getContent(topic) {
   const phishing = await fetch(`http://localhost:8080/articles/${topic}`, {
