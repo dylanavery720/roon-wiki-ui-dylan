@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Spin, Form, Input, Button, Upload, message } from "antd";
+import { Spin, Card } from "antd";
 import { useParams, Link, Redirect } from "react-router-dom";
 import { getHistory } from "../requests/requests";
 
@@ -25,7 +25,22 @@ export default function History(props) {
     <>
       <div style={{ padding: "8px" }}>
         <Spin spinning={loading}>
-          RENDER COMMITS IN PARGRAPH FORM HERE, ORTABLE ?
+          <div>
+            {history &&
+              history.map((edit, i) => {
+                console.log(edit, "eeee");
+                return (
+                  <Card title={i}>
+                    <b>Edited At: </b>
+                    <p>{new Date(edit.createdat).toLocaleString()}</p>
+                    <b>Previous: </b>
+                    <p>{edit.oldcontent}</p>
+                    <b>New: </b>
+                    <p>{edit.newcontent[0].body}</p>
+                  </Card>
+                );
+              })}
+          </div>
         </Spin>
       </div>
     </>

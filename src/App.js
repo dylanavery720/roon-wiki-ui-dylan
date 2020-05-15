@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Article from "./pages/Article";
 import Create from "./pages/Create";
 import History from "./pages/History";
+import Categories from "./pages/Categories";
 import Header from "./components/Header";
 
 function App(props) {
@@ -32,8 +33,7 @@ function AppRouter({ client }) {
             src={COFlag}
           ></img>{" "}
         </Link>
-        <a href="#">About</a>
-        <a href="#">Services</a>
+        <Link to={`/categories`}>Categories</Link>
         <a href="#">Clients</a>
         <a href="#">Contact</a>
         Colorado Mode:{" "}
@@ -45,6 +45,7 @@ function AppRouter({ client }) {
         <>
           <Route path="/" exact component={Index} />
           <Switch>
+            <Route path="/categories" children={<Categories />} />
             <Route path="/articles/:topic" children={<Article />} />
             <Route path="/create/:topic" component={() => <Create />} />
             <Route path="/history/:topic" component={() => <History />} />
