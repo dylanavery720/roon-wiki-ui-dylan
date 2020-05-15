@@ -8,6 +8,7 @@ export default function Article(props) {
   const [oldTopic, setOldTopic] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
   const [editable, setEditable] = React.useState(false);
+  const [newSection, setNewSection] = React.useState([]);
   let { topic } = useParams();
 
   React.useEffect(() => {
@@ -34,16 +35,18 @@ export default function Article(props) {
   };
 
   const onBodyFinish = async (values, header, oldcontent) => {
-    console.log(values, "new Body");
-    const result = await putContent(topic, {
+    await putContent(topic, {
       topic: topic,
       key: "content",
-      newcontent: JSON.stringify([{ header: header, body: values.body }]),
+      newcontent: JSON.stringify([
+        ...content.content,
+        { header: values.header ? values.header : header, body: values.body },
+      ]),
       oldcontent: JSON.stringify(oldcontent),
     });
-    console.log(result, "ress");
     await init();
     setEditable(false);
+    setNewSection([]);
   };
 
   return (
@@ -62,23 +65,60 @@ export default function Article(props) {
             <u>{content && content.topic}</u>
           </h1>
           <p>{content && content.introduction}</p>
+          {content && !editable && newSection.length > 0 && (
+            <Form
+              {...formItemLayout}
+              name="addSection"
+              onFinish={(values) => onBodyFinish(values, values.header, {})}
+            >
+              {newSection.map((ns, i) => {
+                return (
+                  <span>
+                    <Form.Item label="Header" name={`header`}>
+                      <Input.TextArea />
+                    </Form.Item>
+                    <Form.Item label="Body" name={`body`}>
+                      <Input.TextArea />
+                    </Form.Item>
+                  </span>
+                );
+              })}
+
+              <Form.Item>
+                <Button
+                  style={{ float: "right" }}
+                  htmlType="submit"
+                  type="primary"
+                >
+                  Edit {topic}
+                </Button>
+              </Form.Item>
+            </Form>
+          )}
+
           {content &&
             content.content.map((c) => {
               return (
                 <div>
                   <b>{c["header"]}</b>{" "}
                   <a onClick={() => setEditable(true)}>[edit]</a>
+                  {editable && (
+                    <a onClick={() => setEditable(false)}>[close]</a>
+                  )}
                   {!editable && <p>{c["body"]}</p>}
                   {editable && (
                     <Form
                       {...formItemLayout}
                       name="editArticle"
-                      initialValues={{ body: c["body"] }}
+                      initialValues={{ body: c["body"], header: c["header"] }}
                       onFinish={(values) =>
                         onBodyFinish(values, c["header"], c["body"])
                       }
                     >
-                      <Form.Item label={c["header"]} name="body">
+                      <Form.Item label="Header" name="header">
+                        <Input.TextArea />
+                      </Form.Item>
+                      <Form.Item label="Body" name="body">
                         <Input.TextArea />
                       </Form.Item>
                       <Form.Item>
@@ -95,6 +135,19 @@ export default function Article(props) {
                 </div>
               );
             })}
+          {content && (
+            <Button
+              type="primary"
+              onClick={() =>
+                setNewSection([
+                  ...newSection,
+                  newSection[newSection.length - 1] + 1,
+                ])
+              }
+            >
+              Add Section
+            </Button>
+          )}
           {content && (
             <div className="infobox">
               {content.infobox.map((info) => {

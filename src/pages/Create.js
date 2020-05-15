@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Spin, Form, Input, Button, Upload } from "antd";
+import { Spin, Form, Input, Button, Upload, message } from "antd";
 import { useParams, Link, Redirect } from "react-router-dom";
 import { postContent } from "../requests/requests";
 
@@ -17,6 +17,8 @@ export default function Create(props) {
     const result = await postContent(body);
     if (result.status === 201) {
       setSuccess(true);
+    } else {
+      message.error(result.error, "error");
     }
   };
 
