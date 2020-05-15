@@ -53,3 +53,12 @@ export async function getHistory(topic) {
   let parsedJson = await parseJSON(checkedStatus);
   return parsedJson;
 }
+
+export async function getAllArticles(topic) {
+  const response = await fetch(`http://localhost:8080/articles`, {
+    accept: "application/json",
+  });
+  const checkedStatus = await checkStatus(response);
+  let parsedJson = await parseJSON(checkedStatus);
+  return parsedJson;
+}

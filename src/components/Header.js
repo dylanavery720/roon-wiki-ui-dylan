@@ -20,7 +20,11 @@ export default function Header(props) {
             <TabPane
               key={1}
               tab={
-                <Link to={`/articles/${searchValue}`}>
+                <Link
+                  to={`/articles/${
+                    props.currentTopic ? props.currentTopic : searchValue
+                  }`}
+                >
                   <h2>Article</h2>
                 </Link>
               }
@@ -28,20 +32,27 @@ export default function Header(props) {
             <TabPane
               key={2}
               tab={
-                <Link to={`/talk/${searchValue}`}>
+                <Link
+                  to={`/talk/${
+                    props.currentTopic ? props.currentTopic : searchValue
+                  }`}
+                >
                   <h2>Talk</h2>
                 </Link>
               }
             ></TabPane>
           </Tabs>
         </Col>
-        <Col span={8}></Col>
         <Col span={8}>
           <Tabs type="card" animated>
             <TabPane
               key={1}
               tab={
-                <Link to={`/articles/${searchValue}`}>
+                <Link
+                  to={`/articles/${
+                    props.currentTopic ? props.currentTopic : searchValue
+                  }`}
+                >
                   <h2>Read</h2>
                 </Link>
               }
@@ -49,21 +60,35 @@ export default function Header(props) {
             <TabPane
               key={2}
               tab={
-                <Link to={`/history/${searchValue}`}>
+                <Link
+                  to={`/history/${
+                    props.currentTopic ? props.currentTopic : searchValue
+                  }`}
+                >
                   <h2>History</h2>
                 </Link>
               }
             ></TabPane>
           </Tabs>
+        </Col>
+        <Col span={8}>
           <Search
             placeholder="input search text"
             enterButton="Search"
+            allowClear
             onSearch={(value) => {
               setSearchValue(value);
+              props.setTheCurrentTopic(value);
             }}
           ></Search>
         </Col>
-        {searchValue.length > 0 && <Redirect to={`/articles/${searchValue}`} />}
+        {searchValue.length > 0 && (
+          <Redirect
+            to={`/articles/${
+              props.currentTopic ? props.currentTopic : searchValue
+            }`}
+          />
+        )}
       </Row>
     </>
   );

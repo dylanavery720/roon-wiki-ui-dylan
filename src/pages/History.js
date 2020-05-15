@@ -24,22 +24,26 @@ export default function History(props) {
   return (
     <>
       <div style={{ padding: "8px" }}>
-        <Spin spinning={loading}>
+        <Spin style={{ margin: "80px 0px" }} spinning={loading}>
           <div>
             {history &&
               history.map((edit, i) => {
-                console.log(edit, "eeee");
                 return (
-                  <Card title={i}>
+                  <Card title={i + 1}>
                     <b>Edited At: </b>
                     <p>{new Date(edit.createdat).toLocaleString()}</p>
                     <b>Previous: </b>
                     <p>{edit.oldcontent}</p>
                     <b>New: </b>
-                    <p>{edit.newcontent[0].body}</p>
+                    <p>
+                      {edit.newcontent[0].body
+                        ? edit.newcontent[0].body
+                        : edit.newcontent}
+                    </p>
                   </Card>
                 );
               })}
+            {history && history.length < 1 && <p>There is no edit history.</p>}
           </div>
         </Spin>
       </div>

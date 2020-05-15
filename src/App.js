@@ -18,8 +18,13 @@ function App(props) {
   );
 }
 
-function AppRouter({ client }) {
+function AppRouter() {
   const [coloradoMode, setColoradoMode] = React.useState(false);
+  const [currentTopic, setCurrentTopic] = React.useState(null);
+
+  const setTheCurrentTopic = (value) => {
+    setCurrentTopic(value);
+  };
 
   return (
     <div>
@@ -34,18 +39,28 @@ function AppRouter({ client }) {
           ></img>{" "}
         </Link>
         <Link to={`/categories`}>Categories</Link>
-        <a href="#">Clients</a>
         <a href="#">Contact</a>
-        Colorado Mode:{" "}
-        <AntSwitch onChange={(checked) => setColoradoMode(checked)}></AntSwitch>
+        <span style={{ padding: "6px" }}>
+          Colorado Mode:{" "}
+          <AntSwitch
+            onChange={(checked) => setColoradoMode(checked)}
+          ></AntSwitch>
+        </span>
       </div>
 
       <div className={coloradoMode ? "main colorado" : "main"}>
-        <Header coloradoMode={coloradoMode}></Header>
+        <Header
+          coloradoMode={coloradoMode}
+          currentTopic={currentTopic}
+          setTheCurrentTopic={setTheCurrentTopic}
+        ></Header>
         <>
           <Route path="/" exact component={Index} />
           <Switch>
-            <Route path="/categories" children={<Categories />} />
+            <Route
+              path="/categories"
+              children={<Categories setTheCurrentTopic={setTheCurrentTopic} />}
+            />
             <Route path="/articles/:topic" children={<Article />} />
             <Route path="/create/:topic" component={() => <Create />} />
             <Route path="/history/:topic" component={() => <History />} />

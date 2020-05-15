@@ -6,7 +6,7 @@
 
 .App-logo {
   text-align: center;
-  margin: 20px 40px;
+  margin: 20px;
 }
 
 .Header-row {
@@ -48,7 +48,7 @@ h2 {
 }
 
 .sidenav a {
-  padding: 6px 8px 6px 16px;
+  padding: 6px 8px 6px 20px;
   text-decoration: none;
   font-size: 25px;
   color: #818181;

@@ -13,6 +13,7 @@ export default function Create(props) {
       introduction: values.introduction,
       content: JSON.stringify([{ header: values.section, body: values.body }]),
       infobox: JSON.stringify([{ header: values.info, body: values.infoBody }]),
+      category: values.category,
     };
     const result = await postContent(body);
     if (result.status === 201) {
@@ -67,6 +68,9 @@ export default function Create(props) {
             <Input />
           </Form.Item>
           <Form.Item label="InfoBody" name="infoBody">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Category" name="category">
             <Input />
           </Form.Item>
           {/* <Form.Item
