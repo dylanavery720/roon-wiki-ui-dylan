@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Spin, Input, Form, Button } from "antd";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, Redirect } from "react-router-dom";
 import { getContent, putContent } from "../requests/requests";
 
 export default function Article(props) {
@@ -9,6 +9,9 @@ export default function Article(props) {
   const [currentIndex, setCurrentIndex] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
   const [editable, setEditable] = React.useState(false);
+  const [redirectToFixedTopic, setRedirectToFixedTopic] = React.useState(null);
+
+  const [topicEditable, setTopicEditable] = React.useState(false);
   const [newSection, setNewSection] = React.useState([]);
   let { topic } = useParams();
 
@@ -36,14 +39,6 @@ export default function Article(props) {
   };
 
   const onBodyFinish = async (values, header, oldcontent) => {
-    console.log(
-      header,
-      "header",
-      content.content,
-      "c.c",
-      values.header,
-      "values.header"
-    );
     let prevContent = content.content;
     for (let i = 0; i < prevContent.length; i++) {
       if (prevContent[i].header === values.header) {
@@ -75,6 +70,19 @@ export default function Article(props) {
     setEditable(false);
     setNewSection([]);
   };
+
+  const onTopicFinish = async (values) => {
+    await putContent(topic, {
+      topic: topic,
+      key: "topic",
+      newcontent: [values.topic],
+      oldcontent: [topic],
+    });
+    await init();
+    setTopicEditable(false);
+    setRedirectToFixedTopic(values.topic);
+  };
+
   return (
     <>
       <div style={{ padding: "8px" }}>
@@ -87,9 +95,42 @@ export default function Article(props) {
               </Link>
             </div>
           )}
-          <h1>
-            <u>{content && content.topic}</u>
-          </h1>
+          {!topicEditable && (
+            <div>
+              <h1 style={{ display: "inline-block" }}>
+                <u>{content && content.topic}</u>
+              </h1>{" "}
+              <a
+                onClick={() => {
+                  setTopicEditable(true);
+                }}
+              >
+                [edit]
+              </a>
+            </div>
+          )}
+          {topicEditable && (
+            <Form
+              {...formItemLayout}
+              name="editTopic"
+              initialValues={{ topic: topic }}
+              onFinish={(values) => onTopicFinish(values)}
+            >
+              <Form.Item label="Topic" name="topic">
+                <Input.TextArea />
+              </Form.Item>
+              <Form.Item>
+                <Button
+                  style={{ float: "right" }}
+                  htmlType="submit"
+                  type="primary"
+                >
+                  Edit topic
+                </Button>
+              </Form.Item>
+            </Form>
+          )}
+
           <p>{content && content.introduction}</p>
           {content && !editable && newSection.length > 0 && (
             <Form
@@ -237,6 +278,9 @@ export default function Article(props) {
                 </Form>
               )}
             </div>
+          )}
+          {redirectToFixedTopic && (
+            <Redirect to={`/articles/${redirectToFixedTopic}`} />
           )}
         </Spin>
       </div>

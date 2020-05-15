@@ -1,11 +1,15 @@
 import React, { useContext } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useLocation } from "react-router-dom";
 import { Tabs, Row, Col, Input } from "antd";
 const { TabPane } = Tabs;
 
 export default function Header(props) {
   const [searchValue, setSearchValue] = React.useState("");
+  const [leftActiveKey, setLeftActiveKey] = React.useState("0");
+  const [rightActiveKey, setRightActiveKey] = React.useState("0");
   const { Search } = Input;
+  let location = useLocation();
+  let path = location.pathname;
 
   return (
     <>
@@ -16,7 +20,17 @@ export default function Header(props) {
         gutter={8}
       >
         <Col span={8}>
-          <Tabs type="card" animated>
+          <Tabs
+            defaultActiveKey="0"
+            activeKey={
+              path.includes("articles") || path.includes("history")
+                ? "1"
+                : leftActiveKey
+            }
+            onChange={(key) => setLeftActiveKey(key)}
+            type="card"
+            animated
+          >
             <TabPane
               key={1}
               tab={
@@ -44,7 +58,19 @@ export default function Header(props) {
           </Tabs>
         </Col>
         <Col span={8}>
-          <Tabs type="card" animated>
+          <Tabs
+            defaultActiveKey="0"
+            activeKey={
+              path.includes("history")
+                ? rightActiveKey
+                : path.includes("articles") || path.includes("talk")
+                ? "1"
+                : "0"
+            }
+            onChange={(key) => setRightActiveKey(key)}
+            type="card"
+            animated
+          >
             <TabPane
               key={1}
               tab={
