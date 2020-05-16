@@ -15,11 +15,17 @@ export default function Create(props) {
       infobox: JSON.stringify([{ header: values.info, body: values.infoBody }]),
       category: values.category,
     };
-    const result = await postContent(body);
-    if (result.status === 201) {
+    console.log("cdc");
+    const response = await postContent(body);
+    console.log(response, "cc");
+    await checkResponse(response);
+  };
+
+  const checkResponse = async (response) => {
+    if (response.status === 200) {
       setSuccess(true);
     } else {
-      message.error(result.error, "error");
+      message.error("Something Went Wrong");
     }
   };
 
@@ -41,22 +47,70 @@ export default function Create(props) {
           name="createArticle"
           onFinish={onFinish}
         >
-          <Form.Item label="Topic" name="topic">
+          <Form.Item
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+            label="Topic"
+            name="topic"
+          >
             <Input disabled />
           </Form.Item>
-          <Form.Item label="Introduction" name="introduction">
+          <Form.Item
+            // rules={[
+            //   {
+            //     required: true,
+            //   },
+            // ]}
+            label="Introduction"
+            name="introduction"
+          >
             <Input.TextArea />
           </Form.Item>
-          <Form.Item label="Section" name="section">
+          <Form.Item
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+            label="Section"
+            name="section"
+          >
             <Input />
           </Form.Item>
-          <Form.Item label="Body" name="body">
+          <Form.Item
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+            label="Body"
+            name="body"
+          >
             <Input.TextArea />
           </Form.Item>
-          <Form.Item label="Info" name="info">
+          <Form.Item
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+            label="Info"
+            name="info"
+          >
             <Input />
           </Form.Item>
-          <Form.Item label="InfoBody" name="infoBody">
+          <Form.Item
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+            label="InfoBody"
+            name="infoBody"
+          >
             <Input />
           </Form.Item>
           <Form.Item label="Category" name="category">

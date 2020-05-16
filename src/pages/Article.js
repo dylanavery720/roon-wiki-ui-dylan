@@ -1,5 +1,5 @@
 import React from "react";
-import { Spin, Input, Form, Button, message } from "antd";
+import { Spin, Button, message } from "antd";
 import { useParams, Link, Redirect } from "react-router-dom";
 import { getContent, putContent } from "../requests/requests";
 import WikiForm from "../components/WikiForm";
@@ -11,7 +11,6 @@ export default function Article(props) {
   const [loading, setLoading] = React.useState(false);
   const [editable, setEditable] = React.useState(false);
   const [redirectToFixedTopic, setRedirectToFixedTopic] = React.useState(null);
-
   const [topicEditable, setTopicEditable] = React.useState(false);
   const [newSection, setNewSection] = React.useState([]);
   let { topic } = useParams();
@@ -22,15 +21,6 @@ export default function Article(props) {
     }
   });
 
-  const formItemLayout = {
-    labelCol: {
-      span: 6,
-    },
-    wrapperCol: {
-      span: 14,
-    },
-  };
-
   const init = async () => {
     setLoading(true);
     setOldTopic(topic);
@@ -39,31 +29,38 @@ export default function Article(props) {
     setLoading(false);
   };
 
-  const onBodyFinish = async (values, header, oldcontent) => {
-    let prevContent = content.content;
-    for (let i = 0; i < prevContent.length; i++) {
-      if (prevContent[i].header === values.header) {
-        prevContent = prevContent.filter((c) => c.header !== values.header);
-      }
-    }
-    const response = await putContent(topic, {
-      topic: topic,
-      key: "content",
-      newcontent: JSON.stringify([
-        ...prevContent,
-        {
-          header: values.header ? values.header : header,
-          body: values.body.replace(/'/g, ""),
-        },
-      ]),
-      oldcontent: JSON.stringify([oldcontent]),
-    });
-
+  const checkResponse = async (response) => {
     if (response.results === "Success") {
       await init();
     } else {
       message.error("Something Went Wrong");
     }
+  };
+
+  const onBodyFinish = async (values, header, oldcontent) => {
+    let prevContent = content.content;
+    let newContentArray = [];
+    for (let i = 0; i < prevContent.length; i++) {
+      if (prevContent[i].header === values.header) {
+        prevContent = prevContent.filter((c) => c.header !== values.header);
+      }
+    }
+    if (values["header0"]) {
+      for (let i = 0; i < Object.keys(values).length / 2; i++) {
+        newContentArray.push({
+          header: values[`header${i}`],
+          body: values[`body${i}`].replace(/'/g, ""),
+        });
+      }
+    }
+    const response = await putContent(topic, {
+      topic: topic,
+      key: "content",
+      newcontent: JSON.stringify([...prevContent, ...newContentArray]),
+      oldcontent: JSON.stringify([oldcontent]),
+    });
+
+    await checkResponse(response);
     setEditable(false);
     setNewSection([]);
   };
@@ -75,11 +72,7 @@ export default function Article(props) {
       newcontent: [values.category],
       oldcontent: [""],
     });
-    if (response.results === "Success") {
-      await init();
-    } else {
-      message.error("Something Went Wrong");
-    }
+    await checkResponse(response);
     setEditable(false);
     setNewSection([]);
   };
@@ -91,11 +84,7 @@ export default function Article(props) {
       newcontent: [values.topic],
       oldcontent: [topic],
     });
-    if (response.results === "Success") {
-      await init();
-    } else {
-      message.error("Something Went Wrong");
-    }
+    await checkResponse(response);
     setTopicEditable(false);
     setRedirectToFixedTopic(values.topic);
   };
@@ -130,25 +119,13 @@ export default function Article(props) {
             </div>
           )}
           {topicEditable && (
-            <Form
-              {...formItemLayout}
-              name="editTopic"
+            <WikiForm
+              formName="editTopic"
+              onFinish={onTopicFinish}
+              formLabel={["Topic"]}
+              buttonText="Edit topic"
               initialValues={{ topic: topic }}
-              onFinish={(values) => onTopicFinish(values)}
-            >
-              <Form.Item label="Topic" name="topic">
-                <Input.TextArea />
-              </Form.Item>
-              <Form.Item>
-                <Button
-                  style={{ float: "right" }}
-                  htmlType="submit"
-                  type="primary"
-                >
-                  Edit topic
-                </Button>
-              </Form.Item>
-            </Form>
+            ></WikiForm>
           )}
 
           <p className={props.coloradoMode ? "coloradoContent" : "content"}>
@@ -161,41 +138,7 @@ export default function Article(props) {
               formLabel={["Header", "Body"]}
               repeatFormItems={newSection}
               buttonText={`Edit ${topic}`}
-              //  initialValues={{ body: c["body"], header: c["header"] }}
             ></WikiForm>
-            // <Form
-            //   {...formItemLayout}
-            //   name="addSection"
-            //   onFinish={(values) => onBodyFinish(values, values.header, {})}
-            // >
-            //   {newSection.map((ns, i) => {
-            //     return (
-            //       <span>
-            //         <Form.Item label="Header" name={`header`}>
-            //           <Input.TextArea />
-            //         </Form.Item>
-            //         <Form.Item label="Body" name={`body`}>
-            //           <Input.TextArea />
-            //         </Form.Item>
-            //       </span>
-            //     );
-            //   })}
-
-            //   <Form.Item>
-            //     <Button
-            //       style={{
-            //         margin: "5px",
-            //         backgroundColor: props.coloradoMode ? "#35647e" : "#1897ff",
-            //         color: "white",
-            //         float: "right",
-            //       }}
-            //       htmlType="submit"
-            //       type="primary"
-            //     >
-            //       Edit {topic}
-            //     </Button>
-            //   </Form.Item>
-            // </Form>
           )}
 
           {content &&
@@ -208,21 +151,13 @@ export default function Article(props) {
                   <a
                     onClick={() => {
                       setCurrentIndex(i);
-                      setEditable(true);
+                      setEditable(
+                        editable && currentIndex === i ? false : true
+                      );
                     }}
                   >
-                    [edit]
+                    {editable && currentIndex === i ? "[close]" : "[edit]"}
                   </a>
-                  {editable && (
-                    <a
-                      onClick={() => {
-                        setCurrentIndex(i);
-                        setEditable(false);
-                      }}
-                    >
-                      [close]
-                    </a>
-                  )}
                   {(!currentIndex === i || (!currentIndex && !editable)) && (
                     <p>{c["body"]}</p>
                   )}

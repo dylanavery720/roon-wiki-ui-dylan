@@ -21,10 +21,18 @@ export default function WikiForm(props) {
         initialValues={props.initialValues ? props.initialValues : {}}
       >
         {props.repeatFormItems &&
-          props.repeatFormItems.map((ns) => {
+          props.repeatFormItems.map((ns, i) => {
             return props.formLabel.map((label) => {
               return (
-                <Form.Item label={label} name={label.toLowerCase()}>
+                <Form.Item
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                  label={label}
+                  name={label.toLowerCase() + i}
+                >
                   <Input.TextArea />
                 </Form.Item>
               );
@@ -33,7 +41,15 @@ export default function WikiForm(props) {
         {!props.repeatFormItems &&
           props.formLabel.map((label) => {
             return (
-              <Form.Item label={label} name={label.toLowerCase()}>
+              <Form.Item
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
+                label={label}
+                name={label.toLowerCase()}
+              >
                 <Input.TextArea />
               </Form.Item>
             );
