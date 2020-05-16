@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Spin, Form, Input, Button, Upload, message } from "antd";
-import { useParams, Link, Redirect } from "react-router-dom";
+import { useParams, Redirect } from "react-router-dom";
 import { postContent } from "../requests/requests";
 
 export default function Create(props) {
@@ -32,16 +32,6 @@ export default function Create(props) {
     },
   };
 
-  //   const normFile = (e) => {
-  //     console.log("Upload event:", e);
-
-  //     if (Array.isArray(e)) {
-  //       return e;
-  //     }
-
-  //     return e && e.fileList;
-  //   };
-
   return (
     <>
       <div style={{ padding: "8px" }}>
@@ -63,7 +53,6 @@ export default function Create(props) {
           <Form.Item label="Body" name="body">
             <Input.TextArea />
           </Form.Item>
-          {/* ADDABLE SECTIONS? */}
           <Form.Item label="Info" name="info">
             <Input />
           </Form.Item>
@@ -73,20 +62,6 @@ export default function Create(props) {
           <Form.Item label="Category" name="category">
             <Input />
           </Form.Item>
-          {/* <Form.Item
-            name="upload"
-            label="Upload"
-            valuePropName="fileList"
-            getValueFromEvent={normFile}
-            extra="Upload an image for the infobox"
-          >
-            <Upload name="logo" action="/upload.do" listType="picture">
-              <Button>
-                <UploadOutlined />
-                Click to upload
-              </Button>
-            </Upload>
-          </Form.Item> */}
           <Form.Item>
             <Button style={{ float: "right" }} htmlType="submit" type="primary">
               Create {topic}

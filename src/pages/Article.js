@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Spin, Input, Form, Button } from "antd";
+import React from "react";
+import { Spin, Input, Form, Button, message } from "antd";
 import { useParams, Link, Redirect } from "react-router-dom";
 import { getContent, putContent } from "../requests/requests";
 
@@ -45,16 +45,24 @@ export default function Article(props) {
         prevContent = prevContent.filter((c) => c.header !== values.header);
       }
     }
-    await putContent(topic, {
+    const response = await putContent(topic, {
       topic: topic,
       key: "content",
       newcontent: JSON.stringify([
         ...prevContent,
-        { header: values.header ? values.header : header, body: values.body },
+        {
+          header: values.header ? values.header : header,
+          body: values.body.replace(/'/g, ""),
+        },
       ]),
       oldcontent: JSON.stringify([oldcontent]),
     });
-    await init();
+
+    if (response.results === "Success") {
+      await init();
+    } else {
+      message.error("Something Went Wrong");
+    }
     setEditable(false);
     setNewSection([]);
   };
@@ -97,7 +105,10 @@ export default function Article(props) {
           )}
           {!topicEditable && (
             <div>
-              <h1 style={{ display: "inline-block" }}>
+              <h1
+                className={props.coloradoMode ? "coloradoContent" : "content"}
+                style={{ display: "inline-block" }}
+              >
                 <u>{content && content.topic}</u>
               </h1>{" "}
               <a
@@ -131,7 +142,9 @@ export default function Article(props) {
             </Form>
           )}
 
-          <p>{content && content.introduction}</p>
+          <p className={props.coloradoMode ? "coloradoContent" : "content"}>
+            {content && content.introduction}
+          </p>
           {content && !editable && newSection.length > 0 && (
             <Form
               {...formItemLayout}
@@ -153,7 +166,12 @@ export default function Article(props) {
 
               <Form.Item>
                 <Button
-                  style={{ float: "right" }}
+                  style={{
+                    margin: "5px",
+                    backgroundColor: props.coloradoMode ? "#35647e" : "#1897ff",
+                    color: "white",
+                    float: "right",
+                  }}
                   htmlType="submit"
                   type="primary"
                 >
@@ -166,12 +184,14 @@ export default function Article(props) {
           {content &&
             content.content.map((c, i) => {
               return (
-                <div>
+                <div
+                  className={props.coloradoMode ? "coloradoContent" : "content"}
+                >
                   <b>{c["header"]}</b>{" "}
                   <a
                     onClick={() => {
-                      setEditable(true);
                       setCurrentIndex(i);
+                      setEditable(true);
                     }}
                   >
                     [edit]
@@ -179,14 +199,16 @@ export default function Article(props) {
                   {editable && (
                     <a
                       onClick={() => {
-                        setEditable(false);
                         setCurrentIndex(i);
+                        setEditable(false);
                       }}
                     >
                       [close]
                     </a>
                   )}
-                  {!editable && <p>{c["body"]}</p>}
+                  {(!currentIndex === i || (!currentIndex && !editable)) && (
+                    <p>{c["body"]}</p>
+                  )}
                   {editable && currentIndex === i && (
                     <Form
                       {...formItemLayout}
@@ -218,7 +240,11 @@ export default function Article(props) {
             })}
           {content && (
             <Button
-              style={{ margin: "5px" }}
+              style={{
+                margin: "5px",
+                backgroundColor: props.coloradoMode ? "#35647e" : "#1897ff",
+                color: "white",
+              }}
               type="primary"
               onClick={() =>
                 setNewSection([
@@ -232,7 +258,11 @@ export default function Article(props) {
           )}
           {content && !editable && newSection.length > 0 && (
             <Button
-              style={{ margin: "5px" }}
+              style={{
+                margin: "5px",
+                backgroundColor: props.coloradoMode ? "#35647e" : "#1897ff",
+                color: "white",
+              }}
               type="primary"
               onClick={() => {
                 let removeSection = [...newSection];
@@ -268,7 +298,14 @@ export default function Article(props) {
                   </Form.Item>
                   <Form.Item>
                     <Button
-                      style={{ float: "right" }}
+                      style={{
+                        margin: "5px",
+                        backgroundColor: props.coloradoMode
+                          ? "#35647e"
+                          : "#1897ff",
+                        color: "white",
+                        float: "right",
+                      }}
                       htmlType="submit"
                       type="primary"
                     >

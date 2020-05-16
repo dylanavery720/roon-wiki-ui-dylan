@@ -61,7 +61,10 @@ function AppRouter() {
               path="/categories"
               children={<Categories setTheCurrentTopic={setTheCurrentTopic} />}
             />
-            <Route path="/articles/:topic" children={<Article />} />
+            <Route
+              path="/articles/:topic"
+              children={<Article coloradoMode={coloradoMode} />}
+            />
             <Route path="/create/:topic" component={() => <Create />} />
             <Route path="/history/:topic" component={() => <History />} />
           </Switch>

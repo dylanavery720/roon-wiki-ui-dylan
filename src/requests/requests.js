@@ -8,7 +8,6 @@ export async function checkStatus(response) {
   error.status = response.statusText;
   error.response = response;
   message.error(`Something went wrong. ${response.statusText}`);
-  // throw error;
   return response;
 }
 
@@ -33,7 +32,9 @@ export async function putContent(topic, body) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
-  return response;
+  const checkedStatus = await checkStatus(response);
+  let parsedJson = await parseJSON(checkedStatus);
+  return parsedJson;
 }
 
 export async function getContent(topic) {

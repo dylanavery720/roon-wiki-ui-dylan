@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
-import { Spin, Card } from "antd";
-import { useParams, Link, Redirect } from "react-router-dom";
+import React from "react";
+import { Spin, message } from "antd";
+import { Link } from "react-router-dom";
 import { getAllArticles } from "../requests/requests";
 
 export default function Categories(props) {
@@ -9,7 +9,7 @@ export default function Categories(props) {
   const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
-    if (!articles) {
+    if (!articles && !loading) {
       init();
     }
     if (articles) {
@@ -29,6 +29,10 @@ export default function Categories(props) {
   const init = async () => {
     setLoading(true);
     const allArticles = await getAllArticles();
+    if (allArticles.error) {
+      message.error("Something went wrong");
+      return;
+    }
     setArticles(allArticles.results);
     setLoading(false);
   };
@@ -59,10 +63,6 @@ export default function Categories(props) {
                 </div>
               );
             })}
-            {/* <h1 key="restaurants">Restaurants</h1>
-            ADD A COLUMN TO ARTICLES WITH CATEGORY, THEN MAP THROUGH THEM AND
-            ADD THE PRGROMATICALLY...
-            <h1 key="live_music">Live Music</h1> */}
           </div>
         </Spin>
       </div>

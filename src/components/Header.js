@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link, Redirect, useLocation } from "react-router-dom";
-import { Tabs, Row, Col, Input } from "antd";
+import { Tabs, Row, Col, Input, Button } from "antd";
 const { TabPane } = Tabs;
 
 export default function Header(props) {
@@ -13,12 +13,7 @@ export default function Header(props) {
 
   return (
     <>
-      <Row
-        className={
-          props.coloradoMode ? "coloradoHeader Header-row" : "Header-row"
-        }
-        gutter={8}
-      >
+      <Row className="Header-row" gutter={8}>
         <Col span={8}>
           <Tabs
             defaultActiveKey="0"
@@ -100,7 +95,16 @@ export default function Header(props) {
         <Col span={8}>
           <Search
             placeholder="input search text"
-            enterButton="Search"
+            enterButton={
+              <Button
+                style={{
+                  backgroundColor: props.coloradoMode ? "#35647e" : "#1897ff",
+                  color: "white",
+                }}
+              >
+                Search
+              </Button>
+            }
             allowClear
             onSearch={(value) => {
               setSearchValue(value);
