@@ -2,6 +2,7 @@ import React from "react";
 import { Spin, Input, Form, Button, message } from "antd";
 import { useParams, Link, Redirect } from "react-router-dom";
 import { getContent, putContent } from "../requests/requests";
+import WikiForm from "../components/WikiForm";
 
 export default function Article(props) {
   const [content, setContent] = React.useState(null);
@@ -68,25 +69,33 @@ export default function Article(props) {
   };
 
   const onCategoryFinish = async (values) => {
-    await putContent(topic, {
+    const response = await putContent(topic, {
       topic: topic,
       key: "category",
       newcontent: [values.category],
       oldcontent: [""],
     });
-    await init();
+    if (response.results === "Success") {
+      await init();
+    } else {
+      message.error("Something Went Wrong");
+    }
     setEditable(false);
     setNewSection([]);
   };
 
   const onTopicFinish = async (values) => {
-    await putContent(topic, {
+    const response = await putContent(topic, {
       topic: topic,
       key: "topic",
       newcontent: [values.topic],
       oldcontent: [topic],
     });
-    await init();
+    if (response.results === "Success") {
+      await init();
+    } else {
+      message.error("Something Went Wrong");
+    }
     setTopicEditable(false);
     setRedirectToFixedTopic(values.topic);
   };
@@ -146,39 +155,47 @@ export default function Article(props) {
             {content && content.introduction}
           </p>
           {content && !editable && newSection.length > 0 && (
-            <Form
-              {...formItemLayout}
-              name="addSection"
+            <WikiForm
+              formName="addSection"
               onFinish={(values) => onBodyFinish(values, values.header, {})}
-            >
-              {newSection.map((ns, i) => {
-                return (
-                  <span>
-                    <Form.Item label="Header" name={`header`}>
-                      <Input.TextArea />
-                    </Form.Item>
-                    <Form.Item label="Body" name={`body`}>
-                      <Input.TextArea />
-                    </Form.Item>
-                  </span>
-                );
-              })}
+              formLabel={["Header", "Body"]}
+              repeatFormItems={newSection}
+              buttonText={`Edit ${topic}`}
+              //  initialValues={{ body: c["body"], header: c["header"] }}
+            ></WikiForm>
+            // <Form
+            //   {...formItemLayout}
+            //   name="addSection"
+            //   onFinish={(values) => onBodyFinish(values, values.header, {})}
+            // >
+            //   {newSection.map((ns, i) => {
+            //     return (
+            //       <span>
+            //         <Form.Item label="Header" name={`header`}>
+            //           <Input.TextArea />
+            //         </Form.Item>
+            //         <Form.Item label="Body" name={`body`}>
+            //           <Input.TextArea />
+            //         </Form.Item>
+            //       </span>
+            //     );
+            //   })}
 
-              <Form.Item>
-                <Button
-                  style={{
-                    margin: "5px",
-                    backgroundColor: props.coloradoMode ? "#35647e" : "#1897ff",
-                    color: "white",
-                    float: "right",
-                  }}
-                  htmlType="submit"
-                  type="primary"
-                >
-                  Edit {topic}
-                </Button>
-              </Form.Item>
-            </Form>
+            //   <Form.Item>
+            //     <Button
+            //       style={{
+            //         margin: "5px",
+            //         backgroundColor: props.coloradoMode ? "#35647e" : "#1897ff",
+            //         color: "white",
+            //         float: "right",
+            //       }}
+            //       htmlType="submit"
+            //       type="primary"
+            //     >
+            //       Edit {topic}
+            //     </Button>
+            //   </Form.Item>
+            // </Form>
           )}
 
           {content &&
@@ -210,30 +227,15 @@ export default function Article(props) {
                     <p>{c["body"]}</p>
                   )}
                   {editable && currentIndex === i && (
-                    <Form
-                      {...formItemLayout}
-                      name="editArticle"
-                      initialValues={{ body: c["body"], header: c["header"] }}
+                    <WikiForm
+                      formName="editArticle"
                       onFinish={(values) =>
                         onBodyFinish(values, c["header"], c["body"])
                       }
-                    >
-                      <Form.Item label="Header" name="header">
-                        <Input.TextArea />
-                      </Form.Item>
-                      <Form.Item label="Body" name="body">
-                        <Input.TextArea />
-                      </Form.Item>
-                      <Form.Item>
-                        <Button
-                          style={{ float: "right" }}
-                          htmlType="submit"
-                          type="primary"
-                        >
-                          Edit {topic}
-                        </Button>
-                      </Form.Item>
-                    </Form>
+                      formLabel={["Header", "Body"]}
+                      buttonText={`Edit ${topic}`}
+                      initialValues={{ body: c["body"], header: c["header"] }}
+                    ></WikiForm>
                   )}
                 </div>
               );
@@ -288,31 +290,12 @@ export default function Article(props) {
                 </div>
               )}
               {!content.category && (
-                <Form
-                  {...formItemLayout}
-                  name="addCategory"
-                  onFinish={(values) => onCategoryFinish(values)}
-                >
-                  <Form.Item label="Category" name="category">
-                    <Input />
-                  </Form.Item>
-                  <Form.Item>
-                    <Button
-                      style={{
-                        margin: "5px",
-                        backgroundColor: props.coloradoMode
-                          ? "#35647e"
-                          : "#1897ff",
-                        color: "white",
-                        float: "right",
-                      }}
-                      htmlType="submit"
-                      type="primary"
-                    >
-                      Add Category
-                    </Button>
-                  </Form.Item>
-                </Form>
+                <WikiForm
+                  formName="addCategory"
+                  onFinish={onCategoryFinish}
+                  formLabel={["Category"]}
+                  buttonText="Add Category"
+                ></WikiForm>
               )}
             </div>
           )}
