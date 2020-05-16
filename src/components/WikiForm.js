@@ -61,11 +61,24 @@ export default function WikiForm(props) {
               backgroundColor: props.coloradoMode ? "#35647e" : "#1897ff",
               color: "white",
               float: "right",
+              display: "inline-block",
             }}
             htmlType="submit"
             type="primary"
           >
             {props.buttonText}
+          </Button>
+          <Button
+            style={{
+              margin: "5px",
+              // backgroundColor: props.coloradoMode ? "#35647e" : "#1897ff",
+              // color: "white",
+              float: "right",
+              display: "inline-block",
+            }}
+            onClick={props.cancel}
+          >
+            Cancel
           </Button>
         </Form.Item>
       </Form>

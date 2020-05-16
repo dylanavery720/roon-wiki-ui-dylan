@@ -125,6 +125,7 @@ export default function Article(props) {
               formLabel={["Topic"]}
               buttonText="Edit topic"
               initialValues={{ topic: topic }}
+              cancel={() => setTopicEditable(false)}
             ></WikiForm>
           )}
 
@@ -138,6 +139,7 @@ export default function Article(props) {
               formLabel={["Header", "Body"]}
               repeatFormItems={newSection}
               buttonText={`Edit ${topic}`}
+              cancel={() => setNewSection([])}
             ></WikiForm>
           )}
 
@@ -150,7 +152,9 @@ export default function Article(props) {
                   <b>{c["header"]}</b>{" "}
                   <a
                     onClick={() => {
-                      setCurrentIndex(i);
+                      setCurrentIndex(
+                        editable && currentIndex === i ? null : i
+                      );
                       setEditable(
                         editable && currentIndex === i ? false : true
                       );
@@ -170,6 +174,7 @@ export default function Article(props) {
                       formLabel={["Header", "Body"]}
                       buttonText={`Edit ${topic}`}
                       initialValues={{ body: c["body"], header: c["header"] }}
+                      cancel={() => setEditable(false)}
                     ></WikiForm>
                   )}
                 </div>
