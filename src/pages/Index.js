@@ -9,7 +9,12 @@ export default function Index(props) {
       <div>
         <Row>
           <Col span={8}>
-            <Card className="Index-card" title="Historical Article">
+            <Card
+              className={
+                props.coloradoMode ? "Index-card coloradoIndex" : "Index-card"
+              }
+              title="Historical Article"
+            >
               <Link
                 onClick={() => props.setTheCurrentTopic("Tulagis")}
                 to={"/articles/Tulagis"}
@@ -26,7 +31,12 @@ export default function Index(props) {
             </Card>
           </Col>
           <Col span={8}>
-            <Card className="Index-card" title="Featured Article">
+            <Card
+              className={
+                props.coloradoMode ? "Index-card coloradoIndex" : "Index-card"
+              }
+              title="Featured Article"
+            >
               <Link
                 onClick={() =>
                   props.setTheCurrentTopic("New Saigon Bakery and Deli")
@@ -46,7 +56,12 @@ export default function Index(props) {
           </Col>
           <Col span={8}>
             {" "}
-            <Card className="Index-card" title="Random Article">
+            <Card
+              className={
+                props.coloradoMode ? "Index-card coloradoIndex" : "Index-card"
+              }
+              title="Random Article"
+            >
               <Link
                 onClick={() => props.setTheCurrentTopic("Chautauqua Park")}
                 to={"/articles/Chautauqua%20Park"}
@@ -65,7 +80,12 @@ export default function Index(props) {
         </Row>
         <Row>
           <Col span={8}>
-            <Card className="Index-card" title="Popular Article">
+            <Card
+              className={
+                props.coloradoMode ? "Index-card coloradoIndex" : "Index-card"
+              }
+              title="Popular Article"
+            >
               <Link
                 onClick={() => props.setTheCurrentTopic("Il Pastaio")}
                 to={"/articles/Il%20Pastaio"}
@@ -81,7 +101,13 @@ export default function Index(props) {
             </Card>
           </Col>
           <Col span={8}>
-            <Card className="Index-card" title="Newly Extinct">
+            <Card
+              className="Index-card"
+              className={
+                props.coloradoMode ? "Index-card coloradoIndex" : "Index-card"
+              }
+              title="Newly Extinct"
+            >
               <Link
                 onClick={() => props.setTheCurrentTopic("GINGINBUNBUN")}
                 to={"/articles/GINGINBUNBUN"}
@@ -97,7 +123,12 @@ export default function Index(props) {
             </Card>
           </Col>
           <Col span={8}>
-            <Card className="Index-card" title="Trending">
+            <Card
+              className={
+                props.coloradoMode ? "Index-card coloradoIndex" : "Index-card"
+              }
+              title="Trending"
+            >
               <Link
                 onClick={() =>
                   props.setTheCurrentTopic("El Consome De Morelos")

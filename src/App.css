@@ -77,8 +77,24 @@ h2 {
 .coloradoSideNav {
   background-color: #7a853b;
 }
+
 .coloradoSideNav a {
   color: white;
+}
+
+.coloradoIndex {
+  background-color: #7a853b;
+  color: white;
+}
+
+.coloradoIndex h1 {
+  color: white;
+}
+
+.coloradoIndex a,
+.coloradoIndex p {
+  background-color: #7a853b;
+  color: #ffd100;
 }
 
 .infobox {

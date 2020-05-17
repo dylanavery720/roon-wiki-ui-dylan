@@ -37,7 +37,15 @@ export default function History(props) {
                   .parseZone(edit.createdat)
                   .utcOffset(+6, true);
                 return (
-                  <Card key={i} title={i + 1}>
+                  <Card
+                    className={
+                      props.coloradoMode
+                        ? "Index-card coloradoIndex"
+                        : "Index-card"
+                    }
+                    key={i}
+                    title={i + 1}
+                  >
                     <b>Edited At: </b>
                     <p>{new Date(createdAt).toLocaleString()}</p>
                     <b>Previous: </b>

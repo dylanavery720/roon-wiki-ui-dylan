@@ -1,5 +1,5 @@
 import React from "react";
-import { Spin, Button, message } from "antd";
+import { Spin, Button, Row, message } from "antd";
 import { useParams, Link, Redirect } from "react-router-dom";
 import { getContent, putContent } from "../requests/requests";
 import WikiForm from "../components/WikiForm";
@@ -125,7 +125,9 @@ export default function Article(props) {
 
   return (
     <>
-      <div className="container">
+      <div
+        className={props.coloradoMode ? "container coloradoIndex" : "container"}
+      >
         <Spin className="spinner" spinning={loading}>
           {!content && topic && !loading && (
             <div style={{ padding: "10px" }}>
@@ -261,31 +263,33 @@ export default function Article(props) {
               Remove Section
             </Button>
           )}
-          {content && (
-            <div className="infobox">
-              {content.infobox.map((info) => {
-                return (
-                  <span key={info["header"]}>
-                    <b>{info["header"]}</b>: <span>{info["body"]}</span>
-                  </span>
-                );
-              })}
-              {content.category && (
-                <div>
-                  <b>Category</b>: <span>{content.category}</span>
-                </div>
-              )}
-              {!content.category && (
-                <WikiForm
-                  formName="addCategory"
-                  onFinish={onCategoryFinish}
-                  formLabel={["Category"]}
-                  buttonText="Add Category"
-                  coloradoMode={props.coloradoMode}
-                ></WikiForm>
-              )}
-            </div>
-          )}
+          <Row style={{ justifyContent: "space-around" }}>
+            {content && (
+              <div className="infobox">
+                {content.infobox.map((info) => {
+                  return (
+                    <span key={info["header"]}>
+                      <b>{info["header"]}</b>: <span>{info["body"]}</span>
+                    </span>
+                  );
+                })}
+                {content.category && (
+                  <div>
+                    <b>Category</b>: <span>{content.category}</span>
+                  </div>
+                )}
+                {!content.category && (
+                  <WikiForm
+                    formName="addCategory"
+                    onFinish={onCategoryFinish}
+                    formLabel={["Category"]}
+                    buttonText="Add Category"
+                    coloradoMode={props.coloradoMode}
+                  ></WikiForm>
+                )}
+              </div>
+            )}
+          </Row>
           {redirectToFixedTopic && (
             <Redirect to={`/articles/${redirectToFixedTopic}`} />
           )}

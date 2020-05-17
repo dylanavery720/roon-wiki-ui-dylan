@@ -40,7 +40,9 @@ export default function Categories(props) {
 
   return (
     <>
-      <div className="container">
+      <div
+        className={props.coloradoMode ? "container coloradoIndex" : "container"}
+      >
         <Spin className="spinner" spinning={loading}>
           <div>
             {categories.map((category) => {

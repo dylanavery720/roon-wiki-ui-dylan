@@ -60,21 +60,35 @@ function AppRouter() {
             path="/"
             exact
             component={() => (
-              <Index setTheCurrentTopic={setTheCurrentTopic}></Index>
+              <Index
+                setTheCurrentTopic={setTheCurrentTopic}
+                coloradoMode={coloradoMode}
+              ></Index>
             )}
           />
           <Switch>
             <Route
               path="/categories"
-              children={<Categories setTheCurrentTopic={setTheCurrentTopic} />}
+              children={
+                <Categories
+                  coloradoMode={coloradoMode}
+                  setTheCurrentTopic={setTheCurrentTopic}
+                />
+              }
             />
-            <Route path="/contact" component={() => <Contact />} />
+            <Route
+              path="/contact"
+              component={() => <Contact coloradoMode={coloradoMode} />}
+            />
             <Route
               path="/articles/:topic"
               children={<Article coloradoMode={coloradoMode} />}
             />
             <Route path="/create/:topic" component={() => <Create />} />
-            <Route path="/history/:topic" component={() => <History />} />
+            <Route
+              path="/history/:topic"
+              component={() => <History coloradoMode={coloradoMode} />}
+            />
           </Switch>
         </>
       </div>
