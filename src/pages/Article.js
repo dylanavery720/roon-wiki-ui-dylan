@@ -25,7 +25,20 @@ export default function Article(props) {
     setLoading(true);
     setOldTopic(topic);
     const newContent = await getContent(topic);
-    setContent(newContent.results[0]);
+    if (newContent.results[0]) {
+      let arr = newContent.results[0].content;
+      arr.sort(function(a, b) {
+        return a.header.toLowerCase().localeCompare(b.header.toLowerCase());
+      });
+      arr.push(
+        arr.splice(
+          arr.indexOf(arr.find(({ header }) => header === "References")),
+          1
+        )[0]
+      );
+      newContent.results[0].content = arr;
+      setContent(newContent.results[0]);
+    }
     setLoading(false);
   };
 
@@ -66,6 +79,7 @@ export default function Article(props) {
 
     await checkResponse(response);
     setEditable(false);
+    setCurrentIndex(null);
     setNewSection([]);
   };
 
@@ -78,6 +92,7 @@ export default function Article(props) {
     });
     await checkResponse(response);
     setEditable(false);
+    setCurrentIndex(null);
     setNewSection([]);
   };
 
@@ -122,10 +137,7 @@ export default function Article(props) {
           )}
           {!topicEditable && content && (
             <div>
-              <h1
-                className={props.coloradoMode ? "coloradoContent" : "content"}
-                style={{ display: "inline-block" }}
-              >
+              <h1 style={{ display: "inline-block" }}>
                 <u style={{ textTransform: "capitalize" }}>
                   {content && content.topic}
                 </u>
@@ -148,6 +160,7 @@ export default function Article(props) {
               buttonText="Edit topic"
               initialValues={{ topic: topic }}
               cancel={() => setTopicEditable(false)}
+              coloradoMode={props.coloradoMode}
             ></WikiForm>
           )}
 
@@ -161,6 +174,7 @@ export default function Article(props) {
               formLabel={["Header", "Body"]}
               repeatFormItems={newSection}
               buttonText={`Edit ${topic}`}
+              coloradoMode={props.coloradoMode}
               cancel={() => setNewSection([])}
             ></WikiForm>
           )}
@@ -168,10 +182,7 @@ export default function Article(props) {
           {content &&
             content.content.map((c, i) => {
               return (
-                <div
-                  key={c["header"]}
-                  className={props.coloradoMode ? "coloradoContent" : "content"}
-                >
+                <div key={c["header"]}>
                   <b>{c["header"]}</b>{" "}
                   <span
                     className="editable"
@@ -209,6 +220,7 @@ export default function Article(props) {
                       buttonText={`Edit ${topic}`}
                       initialValues={{ body: c["body"], header: c["header"] }}
                       cancel={() => setEditable(false)}
+                      coloradoMode={props.coloradoMode}
                     ></WikiForm>
                   )}
                 </div>
@@ -269,6 +281,7 @@ export default function Article(props) {
                   onFinish={onCategoryFinish}
                   formLabel={["Category"]}
                   buttonText="Add Category"
+                  coloradoMode={props.coloradoMode}
                 ></WikiForm>
               )}
             </div>

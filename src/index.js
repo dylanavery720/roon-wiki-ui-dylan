@@ -6,7 +6,10 @@ import "antd/dist/antd.css";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-
+console.log(
+  "%cThank You Roon Labs!",
+  "color: maroon; font-family:monospace; font-size: 20px"
+);
 ReactDOM.render(
   <Router>
     <App />

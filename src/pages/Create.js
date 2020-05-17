@@ -15,9 +15,7 @@ export default function Create(props) {
       infobox: JSON.stringify([{ header: values.info, body: values.infoBody }]),
       category: values.category,
     };
-    console.log("cdc");
     const response = await postContent(body);
-    console.log(response, "cc");
     await checkResponse(response);
   };
 
