@@ -8,6 +8,7 @@ import Article from "./pages/Article";
 import Create from "./pages/Create";
 import History from "./pages/History";
 import Categories from "./pages/Categories";
+import Contact from "./pages/Contact";
 import Header from "./components/Header";
 
 function App(props) {
@@ -38,8 +39,8 @@ function AppRouter() {
             src={COFlag}
           ></img>{" "}
         </Link>
-        <Link to={`/categories`}>Categories</Link>
-        <a href="#">Contact</a>
+        <Link to={"/categories"}>Categories</Link>
+        <Link to={"/contact"}>Contact</Link>
         <span style={{ padding: "6px" }}>
           Colorado Mode:{" "}
           <AntSwitch
@@ -55,12 +56,19 @@ function AppRouter() {
           setTheCurrentTopic={setTheCurrentTopic}
         ></Header>
         <>
-          <Route path="/" exact component={Index} />
+          <Route
+            path="/"
+            exact
+            component={() => (
+              <Index setTheCurrentTopic={setTheCurrentTopic}></Index>
+            )}
+          />
           <Switch>
             <Route
               path="/categories"
               children={<Categories setTheCurrentTopic={setTheCurrentTopic} />}
             />
+            <Route path="/contact" component={() => <Contact />} />
             <Route
               path="/articles/:topic"
               children={<Article coloradoMode={coloradoMode} />}

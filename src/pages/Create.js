@@ -1,5 +1,5 @@
 import React from "react";
-import { Spin, Form, Input, Button, Upload, message } from "antd";
+import { Form, Input, Button, message } from "antd";
 import { useParams, Redirect } from "react-router-dom";
 import { postContent } from "../requests/requests";
 
@@ -40,7 +40,7 @@ export default function Create(props) {
 
   return (
     <>
-      <div style={{ padding: "8px" }}>
+      <div className="container">
         <Form
           {...formItemLayout}
           initialValues={{ topic: topic }}
@@ -59,11 +59,11 @@ export default function Create(props) {
             <Input disabled />
           </Form.Item>
           <Form.Item
-            // rules={[
-            //   {
-            //     required: true,
-            //   },
-            // ]}
+            rules={[
+              {
+                required: true,
+              },
+            ]}
             label="Introduction"
             name="introduction"
           >

@@ -19,6 +19,14 @@
   text-align: center;
 }
 
+.spinner {
+  margin: 80px 0px;
+}
+
+.container {
+  padding: 8px;
+}
+
 .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab-active a h2 {
   color: #1890ff;
   background: #fff;

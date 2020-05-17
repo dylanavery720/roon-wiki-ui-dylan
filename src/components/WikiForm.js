@@ -1,6 +1,5 @@
 import React from "react";
-import { Link, Redirect, useLocation } from "react-router-dom";
-import { Tabs, Form, Input, Button } from "antd";
+import { Form, Input, Button } from "antd";
 
 const formItemLayout = {
   labelCol: {
@@ -25,6 +24,7 @@ export default function WikiForm(props) {
             return props.formLabel.map((label) => {
               return (
                 <Form.Item
+                  key={label}
                   rules={[
                     {
                       required: true,
@@ -42,6 +42,7 @@ export default function WikiForm(props) {
           props.formLabel.map((label) => {
             return (
               <Form.Item
+                key={label}
                 rules={[
                   {
                     required: true,
@@ -71,8 +72,6 @@ export default function WikiForm(props) {
           <Button
             style={{
               margin: "5px",
-              // backgroundColor: props.coloradoMode ? "#35647e" : "#1897ff",
-              // color: "white",
               float: "right",
               display: "inline-block",
             }}

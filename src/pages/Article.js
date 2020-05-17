@@ -110,8 +110,8 @@ export default function Article(props) {
 
   return (
     <>
-      <div style={{ padding: "8px" }}>
-        <Spin style={{ margin: "80px 0px" }} spinning={loading}>
+      <div className="container">
+        <Spin className="spinner" spinning={loading}>
           {!content && topic && !loading && (
             <div style={{ padding: "10px" }}>
               <span> The page "{oldTopic}"" does not exist, </span>
@@ -120,7 +120,7 @@ export default function Article(props) {
               </Link>
             </div>
           )}
-          {!topicEditable && (
+          {!topicEditable && content && (
             <div>
               <h1
                 className={props.coloradoMode ? "coloradoContent" : "content"}
@@ -130,13 +130,14 @@ export default function Article(props) {
                   {content && content.topic}
                 </u>
               </h1>{" "}
-              <a
+              <span
+                style={{ color: "#1890ff", cursor: "pointer" }}
                 onClick={() => {
                   setTopicEditable(true);
                 }}
               >
                 [edit]
-              </a>
+              </span>
             </div>
           )}
           {topicEditable && (
@@ -168,10 +169,12 @@ export default function Article(props) {
             content.content.map((c, i) => {
               return (
                 <div
+                  key={c["header"]}
                   className={props.coloradoMode ? "coloradoContent" : "content"}
                 >
                   <b>{c["header"]}</b>{" "}
-                  <a
+                  <span
+                    style={{ color: "#1890ff", cursor: "pointer" }}
                     onClick={() => {
                       setCurrentIndex(
                         editable && currentIndex === i ? null : i
@@ -182,15 +185,16 @@ export default function Article(props) {
                     }}
                   >
                     {editable && currentIndex === i ? "[close]" : "[edit]"}
-                  </a>
+                  </span>
                   {editable && currentIndex === i && (
-                    <a
+                    <span
+                      style={{ color: "#1890ff", cursor: "pointer" }}
                       onClick={(values) =>
                         onDeleteSection(values, c["header"], c["body"])
                       }
                     >
                       [delete]
-                    </a>
+                    </span>
                   )}
                   {(!currentIndex === i || (!currentIndex && !editable)) && (
                     <p>{c["body"]}</p>
@@ -249,7 +253,7 @@ export default function Article(props) {
             <div className="infobox">
               {content.infobox.map((info) => {
                 return (
-                  <span>
+                  <span key={info["header"]}>
                     <b>{info["header"]}</b>: <span>{info["body"]}</span>
                   </span>
                 );

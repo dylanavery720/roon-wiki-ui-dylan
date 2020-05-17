@@ -15,12 +15,13 @@ export default function Categories(props) {
     if (articles) {
       articles.map((article) => {
         if (!article.category) {
-          return;
+          return null;
         }
         if (categories.includes(article.category)) {
-          return;
+          return null;
         } else {
           setCategories([...categories, article.category]);
+          return null;
         }
       });
     }
@@ -39,17 +40,18 @@ export default function Categories(props) {
 
   return (
     <>
-      <div style={{ padding: "8px" }}>
-        <Spin style={{ margin: "80px 0px" }} spinning={loading}>
+      <div className="container">
+        <Spin className="spinner" spinning={loading}>
           <div>
             {categories.map((category) => {
               return (
-                <div>
+                <div key={category}>
                   <h2>{category}</h2>
                   {articles.map((article) => {
                     if (article.category === category) {
                       return (
                         <Link
+                          key={article.topic}
                           onClick={() =>
                             props.setTheCurrentTopic(article.topic)
                           }
@@ -61,6 +63,7 @@ export default function Categories(props) {
                         </Link>
                       );
                     }
+                    return null;
                   })}
                 </div>
               );

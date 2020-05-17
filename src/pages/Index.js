@@ -10,7 +10,13 @@ export default function Index(props) {
         <Row>
           <Col span={8}>
             <Card className="Index-card" title="Historical Article">
-              <Link to={"/articles/Tulagis"}> Tulagis</Link>
+              <Link
+                onClick={() => props.setTheCurrentTopic("Tulagis")}
+                to={"/articles/Tulagis"}
+              >
+                {" "}
+                Tulagis
+              </Link>
               <img
                 height="150px"
                 width="200px"
@@ -22,7 +28,12 @@ export default function Index(props) {
           </Col>
           <Col span={8}>
             <Card className="Index-card" title="Featured Article">
-              <Link to={"/articles/New%20Saigon%20Bakery%20and%20Deli"}>
+              <Link
+                onClick={() =>
+                  props.setTheCurrentTopic("New Saigon Bakery and Deli")
+                }
+                to={"/articles/New%20Saigon%20Bakery%20and%20Deli"}
+              >
                 {" "}
                 New Saigon Bakery and Deli
               </Link>
@@ -38,7 +49,13 @@ export default function Index(props) {
           <Col span={8}>
             {" "}
             <Card className="Index-card" title="Random Article">
-              <Link to={"/articles/Chautauqua%20Park"}> Chautauqua Park</Link>
+              <Link
+                onClick={() => props.setTheCurrentTopic("Chautauqua Park")}
+                to={"/articles/Chautauqua%20Park"}
+              >
+                {" "}
+                Chautauqua Park
+              </Link>
               <img
                 height="150px"
                 width="200px"
@@ -52,7 +69,12 @@ export default function Index(props) {
         <Row>
           <Col span={8}>
             <Card className="Index-card" title="Popular Article">
-              <Link to={"/articles/Il%20Pastaio"}>Il Pastaio</Link>
+              <Link
+                onClick={() => props.setTheCurrentTopic("Il Pastaio")}
+                to={"/articles/Il%20Pastaio"}
+              >
+                Il Pastaio
+              </Link>
               <img
                 height="150px"
                 width="200px"
@@ -64,7 +86,12 @@ export default function Index(props) {
           </Col>
           <Col span={8}>
             <Card className="Index-card" title="Newly Extinct">
-              <Link to={"/articles/GINGINBUNBUN"}>GINGINBUNBUN</Link>
+              <Link
+                onClick={() => props.setTheCurrentTopic("GINGINBUNBUN")}
+                to={"/articles/GINGINBUNBUN"}
+              >
+                GINGINBUNBUN
+              </Link>
               <img
                 height="150px"
                 width="200px"
@@ -76,7 +103,12 @@ export default function Index(props) {
           </Col>
           <Col span={8}>
             <Card className="Index-card" title="Trending">
-              <Link to={"/articles/El%20Consome%20De%20Morelos"}>
+              <Link
+                onClick={() =>
+                  props.setTheCurrentTopic("El Consome De Morelos")
+                }
+                to={"/articles/El%20Consome%20De%20Morelos"}
+              >
                 El Consome De Morelos
               </Link>
               <img

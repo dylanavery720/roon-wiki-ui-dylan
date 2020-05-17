@@ -28,8 +28,8 @@ export default function History(props) {
 
   return (
     <>
-      <div style={{ padding: "8px" }}>
-        <Spin style={{ margin: "80px 0px" }} spinning={loading}>
+      <div className="container">
+        <Spin className="spinner" spinning={loading}>
           <div>
             {history &&
               history.map((edit, i) => {
@@ -37,7 +37,7 @@ export default function History(props) {
                   .parseZone(edit.createdat)
                   .utcOffset(+6, true);
                 return (
-                  <Card title={i + 1}>
+                  <Card key={i} title={i + 1}>
                     <b>Edited At: </b>
                     <p>{new Date(createdAt).toLocaleString()}</p>
                     <b>Previous: </b>
