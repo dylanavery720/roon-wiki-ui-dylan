@@ -35,7 +35,7 @@ export default function History(props) {
               history.map((edit, i) => {
                 let createdAt = moment
                   .parseZone(edit.createdat)
-                  .utcOffset(-6, true);
+                  .utcOffset(+6, true);
                 return (
                   <Card title={i + 1}>
                     <b>Edited At: </b>

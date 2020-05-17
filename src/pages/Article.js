@@ -52,6 +52,10 @@ export default function Article(props) {
           body: values[`body${i}`].replace(/'/g, ""),
         });
       }
+    } else {
+      newContentArray = [
+        { header: values.header ? values.header : header, body: values.body },
+      ];
     }
     const response = await putContent(topic, {
       topic: topic,
@@ -81,12 +85,27 @@ export default function Article(props) {
     const response = await putContent(topic, {
       topic: topic,
       key: "topic",
-      newcontent: [values.topic],
+      newcontent: [values.topic.toLowerCase()],
       oldcontent: [topic],
     });
     await checkResponse(response);
     setTopicEditable(false);
     setRedirectToFixedTopic(values.topic);
+  };
+
+  const onDeleteSection = async (values, header, oldcontent) => {
+    let prevContent = [...content.content];
+    prevContent = prevContent.filter((content) => content.header !== header);
+    const response = await putContent(topic, {
+      topic: topic,
+      key: "content",
+      newcontent: JSON.stringify([...prevContent]),
+      oldcontent: JSON.stringify([oldcontent]),
+    });
+    await checkResponse(response);
+    setEditable(false);
+    setCurrentIndex(null);
+    setNewSection([]);
   };
 
   return (
@@ -107,7 +126,9 @@ export default function Article(props) {
                 className={props.coloradoMode ? "coloradoContent" : "content"}
                 style={{ display: "inline-block" }}
               >
-                <u>{content && content.topic}</u>
+                <u style={{ textTransform: "capitalize" }}>
+                  {content && content.topic}
+                </u>
               </h1>{" "}
               <a
                 onClick={() => {
@@ -162,6 +183,15 @@ export default function Article(props) {
                   >
                     {editable && currentIndex === i ? "[close]" : "[edit]"}
                   </a>
+                  {editable && currentIndex === i && (
+                    <a
+                      onClick={(values) =>
+                        onDeleteSection(values, c["header"], c["body"])
+                      }
+                    >
+                      [delete]
+                    </a>
+                  )}
                   {(!currentIndex === i || (!currentIndex && !editable)) && (
                     <p>{c["body"]}</p>
                   )}

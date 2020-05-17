@@ -55,7 +55,9 @@ export default function Categories(props) {
                           }
                           to={`/articles/${article.topic}`}
                         >
-                          <p>{article.topic}</p>
+                          <p style={{ textTransform: "capitalize" }}>
+                            {article.topic}
+                          </p>
                         </Link>
                       );
                     }
