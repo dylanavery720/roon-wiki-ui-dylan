@@ -57,6 +57,9 @@ export default function Article(props) {
       if (prevContent[i].header === values.header) {
         prevContent = prevContent.filter((c) => c.header !== values.header);
       }
+      if (prevContent[i]) {
+        prevContent[i].body = prevContent[i].body.replace(/'/g, "");
+      }
     }
     if (values["header0"]) {
       for (let i = 0; i < Object.keys(values).length / 2; i++) {
@@ -67,7 +70,10 @@ export default function Article(props) {
       }
     } else {
       newContentArray = [
-        { header: values.header ? values.header : header, body: values.body },
+        {
+          header: values.header ? values.header : header,
+          body: values.body.replace(/'/g, ""),
+        },
       ];
     }
     const response = await putContent(topic, {

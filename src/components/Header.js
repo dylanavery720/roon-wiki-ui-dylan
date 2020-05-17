@@ -107,8 +107,8 @@ export default function Header(props) {
             }
             allowClear
             onSearch={(value) => {
-              setSearchValue(value);
-              props.setTheCurrentTopic(value);
+              setSearchValue(value.trim());
+              props.setTheCurrentTopic(value.trim());
             }}
           ></Search>
         </Col>

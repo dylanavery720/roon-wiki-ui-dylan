@@ -102,7 +102,6 @@ export default function Index(props) {
           </Col>
           <Col span={8}>
             <Card
-              className="Index-card"
               className={
                 props.coloradoMode ? "Index-card coloradoIndex" : "Index-card"
               }
