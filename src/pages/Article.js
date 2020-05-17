@@ -131,7 +131,7 @@ export default function Article(props) {
                 </u>
               </h1>{" "}
               <span
-                style={{ color: "#1890ff", cursor: "pointer" }}
+                className="editable"
                 onClick={() => {
                   setTopicEditable(true);
                 }}
@@ -174,7 +174,7 @@ export default function Article(props) {
                 >
                   <b>{c["header"]}</b>{" "}
                   <span
-                    style={{ color: "#1890ff", cursor: "pointer" }}
+                    className="editable"
                     onClick={() => {
                       setCurrentIndex(
                         editable && currentIndex === i ? null : i
@@ -188,7 +188,7 @@ export default function Article(props) {
                   </span>
                   {editable && currentIndex === i && (
                     <span
-                      style={{ color: "#1890ff", cursor: "pointer" }}
+                      className="editable"
                       onClick={(values) =>
                         onDeleteSection(values, c["header"], c["body"])
                       }

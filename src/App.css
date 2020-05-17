@@ -18,9 +18,18 @@
   margin: 20px;
   text-align: center;
 }
+.ant-card-body > img {
+  display: block;
+  margin: auto;
+}
 
 .spinner {
   margin: 80px 0px;
+}
+
+.editable {
+  color: #1890ff;
+  cursor: pointer;
 }
 
 .container {
