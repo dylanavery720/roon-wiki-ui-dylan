@@ -24,6 +24,15 @@ npm install
 npm start
 ```
 
+## Postgres
+
+Locate the file in the server called "latest.dump", you can use pg_restore to create the database.
+
+```bash
+pg_restore --verbose --clean --no-acl --no-owner -h localhost -U myuser -d mydb latest.dump
+
+```
+
 ## Run App
 
 ```bash
