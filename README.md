@@ -46,6 +46,8 @@ npm start
 
 ## Run App
 
+Create a .env file with an environment variable REACT_APP_SERVER_URL=http://localhost:8080
+
 ```bash
 cd roon-colorado-wiki
 npm start
