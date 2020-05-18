@@ -24,9 +24,13 @@ git clone https://github.com/dylanavery720/roon-wiki-api-dylan
 cd roon-wiki-api
 ```
 
+Enter psql
+
 ```psql
 CREATE DATABASE name;
 ```
+
+Exit psql
 
 ```bash
 pg_restore --verbose --clean --no-acl --no-owner -h localhost -U myuser -d mydb latest.dump
@@ -43,6 +47,7 @@ npm start
 ## Run App
 
 ```bash
+cd roon-colorado-wiki
 npm start
 ```
 
