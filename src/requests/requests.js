@@ -16,7 +16,7 @@ export async function parseJSON(response) {
 }
 
 export async function postContent(body) {
-  const response = await fetch(`http://localhost:8080/articles`, {
+  const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/articles`, {
     method: "POST",
     accept: "application/json",
     headers: { "Content-Type": "application/json" },
@@ -26,37 +26,46 @@ export async function postContent(body) {
 }
 
 export async function putContent(topic, body) {
-  const response = await fetch(`http://localhost:8080/articles/${topic}`, {
-    method: "PUT",
-    accept: "application/json",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
+  const response = await fetch(
+    `${process.env.REACT_APP_SERVER_URL}/articles/${topic}`,
+    {
+      method: "PUT",
+      accept: "application/json",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    }
+  );
   const checkedStatus = await checkStatus(response);
   let parsedJson = await parseJSON(checkedStatus);
   return parsedJson;
 }
 
 export async function getContent(topic) {
-  const response = await fetch(`http://localhost:8080/articles/${topic}`, {
-    accept: "application/json",
-  });
+  const response = await fetch(
+    `${process.env.REACT_APP_SERVER_URL}/articles/${topic}`,
+    {
+      accept: "application/json",
+    }
+  );
   const checkedStatus = await checkStatus(response);
   let parsedJson = await parseJSON(checkedStatus);
   return parsedJson;
 }
 
 export async function getHistory(topic) {
-  const response = await fetch(`http://localhost:8080/edits/${topic}`, {
-    accept: "application/json",
-  });
+  const response = await fetch(
+    `${process.env.REACT_APP_SERVER_URL}/edits/${topic}`,
+    {
+      accept: "application/json",
+    }
+  );
   const checkedStatus = await checkStatus(response);
   let parsedJson = await parseJSON(checkedStatus);
   return parsedJson;
 }
 
 export async function getAllArticles(topic) {
-  const response = await fetch(`http://localhost:8080/articles`, {
+  const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/articles`, {
     accept: "application/json",
   });
   const checkedStatus = await checkStatus(response);
