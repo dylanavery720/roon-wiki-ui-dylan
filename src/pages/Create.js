@@ -54,7 +54,7 @@ export default function Create(props) {
             label="Topic"
             name="topic"
           >
-            <Input disabled />
+            <Input disabled={topic} />
           </Form.Item>
           <Form.Item
             rules={[

@@ -38,6 +38,8 @@ export default function Article(props) {
       );
       newContent.results[0].content = arr;
       setContent(newContent.results[0]);
+    } else {
+      setContent(newContent.results[0]);
     }
     setLoading(false);
   };

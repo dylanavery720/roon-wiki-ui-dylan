@@ -40,6 +40,7 @@ function AppRouter() {
           ></img>{" "}
         </Link>
         <Link to={"/categories"}>Categories</Link>
+        <Link to={"/create"}>Create</Link>
         <Link to={"/contact"}>Contact</Link>
         <span style={{ padding: "6px" }}>
           Colorado Mode:{" "}
@@ -76,6 +77,8 @@ function AppRouter() {
                 />
               }
             />
+            <Route path="/create/:topic" component={() => <Create />} />
+            <Route path="/create" component={() => <Create />} />
             <Route
               path="/contact"
               component={() => <Contact coloradoMode={coloradoMode} />}
@@ -84,7 +87,6 @@ function AppRouter() {
               path="/articles/:topic"
               children={<Article coloradoMode={coloradoMode} />}
             />
-            <Route path="/create/:topic" component={() => <Create />} />
             <Route
               path="/history/:topic"
               component={() => <History coloradoMode={coloradoMode} />}
