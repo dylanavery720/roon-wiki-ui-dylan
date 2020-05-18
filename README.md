@@ -3,7 +3,7 @@
 A simple wiki page dedicated to chronicling the history of Colorado.
 
 - [Install](#install)
-- [Server](#server)
+- [Server & Postgres](#server)
 - [Run App](#run-app)
 - [Search](#search)
 - [Heroku Link](#heroku-link)
@@ -15,22 +15,29 @@ cd roon-colorado-wiki
 npm install
 ```
 
-## Server
+## Server & Postgres
+
+Before you run the server, locate the file in the server called "latest.dump".
 
 ```bash
 git clone https://github.com/dylanavery720/roon-wiki-api-dylan
 cd roon-wiki-api
-npm install
-npm start
 ```
 
-## Postgres
-
-Locate the file in the server called "latest.dump", you can use pg_restore to create the database.
+```psql
+CREATE DATABASE name;
+```
 
 ```bash
 pg_restore --verbose --clean --no-acl --no-owner -h localhost -U myuser -d mydb latest.dump
+```
 
+Then create a .env file with an environment variable DATABASE_URL={your_db}
+
+```
+bash
+npm install
+npm start
 ```
 
 ## Run App
