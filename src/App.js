@@ -23,6 +23,14 @@ function AppRouter() {
   const [coloradoMode, setColoradoMode] = React.useState(false);
   const [currentTopic, setCurrentTopic] = React.useState(null);
 
+  React.useEffect(() => {
+    if (coloradoMode) {
+      document.body.style = "background-color: #00529C;";
+    } else {
+      document.body.style = "background-color: white";
+    }
+  }, [coloradoMode]);
+
   const setTheCurrentTopic = (value) => {
     setCurrentTopic(value);
   };
@@ -77,8 +85,14 @@ function AppRouter() {
                 />
               }
             />
-            <Route path="/create/:topic" component={() => <Create />} />
-            <Route path="/create" component={() => <Create />} />
+            <Route
+              path="/create/:topic"
+              component={() => <Create coloradoMode={coloradoMode} />}
+            />
+            <Route
+              path="/create"
+              component={() => <Create coloradoMode={coloradoMode} />}
+            />
             <Route
               path="/contact"
               component={() => <Contact coloradoMode={coloradoMode} />}

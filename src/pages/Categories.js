@@ -48,7 +48,9 @@ export default function Categories(props) {
             {categories.map((category) => {
               return (
                 <div key={category}>
-                  <h2>{category}</h2>
+                  <h2>
+                    <u>{category}</u>
+                  </h2>
                   {articles.map((article) => {
                     if (article.category === category) {
                       return (

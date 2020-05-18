@@ -74,8 +74,12 @@ h2 {
   margin-left: 160px;
 }
 
+.coloradoIndex .ant-form label {
+  color: white;
+}
+
 .coloradoSideNav {
-  background-color: #7a853b;
+  background-color: #00529c;
 }
 
 .coloradoSideNav a,
@@ -84,13 +88,29 @@ h2 {
   color: #ffd100;
 }
 
+.coloradoIndex .infobox {
+  background-color: #5c666f;
+}
+
+.infobox span {
+  color: white;
+}
+
+.coloradoIndex h1,
+.coloradoIndex h2,
+.coloradoIndex div > p,
+.coloradoIndex b,
+.coloradoIndex div.ant-card-head-title {
+  color: white;
+}
+
 .coloradoIndex {
-  background-color: #7a853b;
+  background-color: #00529c;
 }
 
 .coloradoIndex a,
 .coloradoIndex p {
-  background-color: #7a853b;
+  background-color: #00529c;
 }
 
 .infobox {

@@ -38,7 +38,9 @@ export default function Create(props) {
 
   return (
     <>
-      <div className="container">
+      <div
+        className={props.coloradoMode ? "container coloradoIndex" : "container"}
+      >
         <Form
           {...formItemLayout}
           initialValues={{ topic: topic }}
@@ -115,7 +117,14 @@ export default function Create(props) {
             <Input />
           </Form.Item>
           <Form.Item>
-            <Button style={{ float: "right" }} htmlType="submit" type="primary">
+            <Button
+              style={{
+                float: "right",
+                backgroundColor: props.coloradoMode ? "#35647e" : "#1897ff",
+              }}
+              htmlType="submit"
+              type="primary"
+            >
               Create {topic}
             </Button>
           </Form.Item>
