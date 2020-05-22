@@ -96,4 +96,7 @@ function useColoradoMode(coloradoMode) {
       document.body.style = "background-color: white";
     }
   }, [coloradoMode]);
+  return () => {
+    document.body.style = "background-color: white";
+  };
 }
