@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, Redirect, useLocation } from "react-router-dom";
 import { Tabs, Row, Col, Input, Button } from "antd";
+import { ColoradoContext } from "../contexts/Context";
 const { TabPane } = Tabs;
 
 export default function Header(props) {
@@ -8,6 +9,7 @@ export default function Header(props) {
   const [leftActiveKey, setLeftActiveKey] = useState("0");
   const [rightActiveKey, setRightActiveKey] = useState("0");
   const { Search } = Input;
+  const coloradoMode = useContext(ColoradoContext);
   let location = useLocation();
   let path = location.pathname;
 
@@ -98,7 +100,7 @@ export default function Header(props) {
             enterButton={
               <Button
                 style={{
-                  backgroundColor: props.coloradoMode ? "#35647e" : "#1897ff",
+                  backgroundColor: coloradoMode ? "#35647e" : "#1897ff",
                   color: "white",
                 }}
               >

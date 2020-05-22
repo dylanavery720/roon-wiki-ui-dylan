@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Input, Button, message } from "antd";
 import { useParams, Redirect } from "react-router-dom";
 import { postContent } from "../requests/requests";
+import { ColoradoContext } from "../contexts/Context";
 
 export default function Create(props) {
   let { topic } = useParams();
   const [success, setSuccess] = useState(false);
+  const coloradoMode = useContext(ColoradoContext);
 
   const onFinish = async (values) => {
     let body = {
@@ -38,9 +40,7 @@ export default function Create(props) {
 
   return (
     <>
-      <div
-        className={props.coloradoMode ? "container coloradoIndex" : "container"}
-      >
+      <div className={coloradoMode ? "container coloradoIndex" : "container"}>
         <Form
           {...formItemLayout}
           initialValues={{ topic: topic }}
@@ -120,7 +120,7 @@ export default function Create(props) {
             <Button
               style={{
                 float: "right",
-                backgroundColor: props.coloradoMode ? "#35647e" : "#1897ff",
+                backgroundColor: coloradoMode ? "#35647e" : "#1897ff",
               }}
               htmlType="submit"
               type="primary"

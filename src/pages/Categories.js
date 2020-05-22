@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Spin, message } from "antd";
 import { Link } from "react-router-dom";
 import { getAllArticles } from "../requests/requests";
+import { ColoradoContext } from "../contexts/Context";
 
 export default function Categories(props) {
   const [articles, setArticles] = useState(null);
   const categories = useCategories(articles);
   const [loading, setLoading] = useState(false);
+  const coloradoMode = useContext(ColoradoContext);
 
   useEffect(() => {
     if (!articles && !loading) {
@@ -27,9 +29,7 @@ export default function Categories(props) {
 
   return (
     <>
-      <div
-        className={props.coloradoMode ? "container coloradoIndex" : "container"}
-      >
+      <div className={coloradoMode ? "container coloradoIndex" : "container"}>
         <Spin className="spinner" spinning={loading}>
           <div>
             {categories.map((category) => {

@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { Row, Col, Card } from "antd";
 import { Link } from "react-router-dom";
 import { getAllArticles } from "../requests/requests";
+import { ColoradoContext } from "../contexts/Context";
 
 export default function Index(props) {
-  // TODO: Generate this data at the API level every day and display new cards dynamically.
-
+  // TODO: Generate this data at the API  level every day and display new cards dynamically.
+  const coloradoMode = useContext(ColoradoContext);
   useEffect(() => {
     getAllArticles();
   });
@@ -17,7 +18,7 @@ export default function Index(props) {
           <Col span={8}>
             <Card
               className={
-                props.coloradoMode ? "Index-card coloradoIndex" : "Index-card"
+                coloradoMode ? "Index-card coloradoIndex" : "Index-card"
               }
               title="Historical Article"
             >
@@ -39,7 +40,7 @@ export default function Index(props) {
           <Col span={8}>
             <Card
               className={
-                props.coloradoMode ? "Index-card coloradoIndex" : "Index-card"
+                coloradoMode ? "Index-card coloradoIndex" : "Index-card"
               }
               title="Featured Article"
             >
@@ -64,7 +65,7 @@ export default function Index(props) {
             {" "}
             <Card
               className={
-                props.coloradoMode ? "Index-card coloradoIndex" : "Index-card"
+                coloradoMode ? "Index-card coloradoIndex" : "Index-card"
               }
               title="Random Article"
             >
@@ -88,7 +89,7 @@ export default function Index(props) {
           <Col span={8}>
             <Card
               className={
-                props.coloradoMode ? "Index-card coloradoIndex" : "Index-card"
+                coloradoMode ? "Index-card coloradoIndex" : "Index-card"
               }
               title="Popular Article"
             >
@@ -109,7 +110,7 @@ export default function Index(props) {
           <Col span={8}>
             <Card
               className={
-                props.coloradoMode ? "Index-card coloradoIndex" : "Index-card"
+                coloradoMode ? "Index-card coloradoIndex" : "Index-card"
               }
               title="Newly Extinct"
             >
@@ -130,7 +131,7 @@ export default function Index(props) {
           <Col span={8}>
             <Card
               className={
-                props.coloradoMode ? "Index-card coloradoIndex" : "Index-card"
+                coloradoMode ? "Index-card coloradoIndex" : "Index-card"
               }
               title="Trending"
             >

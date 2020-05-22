@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Spin, Card, message } from "antd";
 import { useParams } from "react-router-dom";
 import { getHistory } from "../requests/requests";
 import moment from "moment";
+import { ColoradoContext } from "../contexts/Context";
 
 export default function History(props) {
   let { topic } = useParams();
   const [history, setHistory] = useState(null);
   const [loading, setLoading] = useState(false);
+  const coloradoMode = useContext(ColoradoContext);
 
   useEffect(() => {
     if (!history) {
@@ -39,9 +41,7 @@ export default function History(props) {
                 return (
                   <Card
                     className={
-                      props.coloradoMode
-                        ? "Index-card coloradoIndex"
-                        : "Index-card"
+                      coloradoMode ? "Index-card coloradoIndex" : "Index-card"
                     }
                     key={i}
                     title={i + 1}

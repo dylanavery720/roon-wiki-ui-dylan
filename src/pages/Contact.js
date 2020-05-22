@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Card } from "antd";
+import { ColoradoContext } from "../contexts/Context";
 
 export default function Contact(props) {
+  const coloradoMode = useContext(ColoradoContext);
   return (
     <>
       <div className="container">
         <Card
-          className={
-            props.coloradoMode ? "Index-card coloradoIndex" : "Index-card"
-          }
+          className={coloradoMode ? "Index-card coloradoIndex" : "Index-card"}
           title="Contact"
         >
           <p>

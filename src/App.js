@@ -10,6 +10,7 @@ import History from "./pages/History";
 import Categories from "./pages/Categories";
 import Contact from "./pages/Contact";
 import Header from "./components/Header";
+import { ColoradoContext } from "./contexts/Context.js";
 
 function App(props) {
   return (
@@ -22,14 +23,7 @@ function App(props) {
 function AppRouter() {
   const [coloradoMode, setColoradoMode] = useState(false);
   const [currentTopic, setCurrentTopic] = useState(null);
-
-  useEffect(() => {
-    if (coloradoMode) {
-      document.body.style = "background-color: #00529C;";
-    } else {
-      document.body.style = "background-color: white";
-    }
-  }, [coloradoMode]);
+  useColoradoMode(coloradoMode);
 
   const setTheCurrentTopic = (value) => {
     setCurrentTopic(value);
@@ -37,79 +31,69 @@ function AppRouter() {
 
   return (
     <div>
-      <div className={coloradoMode ? "sidenav coloradoSideNav " : "sidenav"}>
-        <Link to={`/`}>
-          <img
-            height="50px"
-            width="80px"
-            className="App-logo"
-            alt="coflag"
-            src={COFlag}
-          ></img>{" "}
-        </Link>
-        <Link to={"/categories"}>Categories</Link>
-        <Link to={"/create"}>Create</Link>
-        <Link to={"/contact"}>Contact</Link>
-        <span style={{ padding: "6px" }}>
-          Colorado Mode:{" "}
-          <AntSwitch
-            onChange={(checked) => setColoradoMode(checked)}
-          ></AntSwitch>
-        </span>
-      </div>
+      <ColoradoContext.Provider value={coloradoMode}>
+        <div className={coloradoMode ? "sidenav coloradoSideNav " : "sidenav"}>
+          <Link to={`/`}>
+            <img
+              height="50px"
+              width="80px"
+              className="App-logo"
+              alt="coflag"
+              src={COFlag}
+            ></img>{" "}
+          </Link>
+          <Link to={"/categories"}>Categories</Link>
+          <Link to={"/create"}>Create</Link>
+          <Link to={"/contact"}>Contact</Link>
+          <span style={{ padding: "6px" }}>
+            Colorado Mode:{" "}
+            <AntSwitch
+              onChange={(checked) => setColoradoMode(checked)}
+            ></AntSwitch>
+          </span>
+        </div>
 
-      <div className={coloradoMode ? "main colorado" : "main"}>
-        <Header
-          coloradoMode={coloradoMode}
-          currentTopic={currentTopic}
-          setTheCurrentTopic={setTheCurrentTopic}
-        ></Header>
-        <>
-          <Route
-            path="/"
-            exact
-            component={() => (
-              <Index
-                setTheCurrentTopic={setTheCurrentTopic}
-                coloradoMode={coloradoMode}
-              ></Index>
-            )}
-          />
-          <Switch>
+        <div className={coloradoMode ? "main colorado" : "main"}>
+          <Header
+            currentTopic={currentTopic}
+            setTheCurrentTopic={setTheCurrentTopic}
+          ></Header>
+          <>
             <Route
-              path="/categories"
-              children={
-                <Categories
-                  coloradoMode={coloradoMode}
-                  setTheCurrentTopic={setTheCurrentTopic}
-                />
-              }
+              path="/"
+              exact
+              component={() => (
+                <Index setTheCurrentTopic={setTheCurrentTopic}></Index>
+              )}
             />
-            <Route
-              path="/create/:topic"
-              component={() => <Create coloradoMode={coloradoMode} />}
-            />
-            <Route
-              path="/create"
-              component={() => <Create coloradoMode={coloradoMode} />}
-            />
-            <Route
-              path="/contact"
-              component={() => <Contact coloradoMode={coloradoMode} />}
-            />
-            <Route
-              path="/articles/:topic"
-              children={<Article coloradoMode={coloradoMode} />}
-            />
-            <Route
-              path="/history/:topic"
-              component={() => <History coloradoMode={coloradoMode} />}
-            />
-          </Switch>
-        </>
-      </div>
+            <Switch>
+              <Route
+                path="/categories"
+                children={
+                  <Categories setTheCurrentTopic={setTheCurrentTopic} />
+                }
+              />
+              <Route path="/create/:topic" component={() => <Create />} />
+              <Route path="/create" component={() => <Create />} />
+              <Route path="/contact" component={() => <Contact />} />
+              <Route path="/articles/:topic" children={<Article />} />
+              <Route path="/history/:topic" component={() => <History />} />
+            </Switch>
+          </>
+        </div>
+      </ColoradoContext.Provider>
     </div>
   );
 }
 
 export default App;
+
+function useColoradoMode(coloradoMode) {
+  useEffect(() => {
+    if (coloradoMode) {
+      document.body.style = "background-color: #00529C;";
+    } else {
+      document.body.style = "background-color: white";
+    }
+  }, [coloradoMode]);
+}

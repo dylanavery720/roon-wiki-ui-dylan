@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Form, Input, Button } from "antd";
+import { ColoradoContext } from "../contexts/Context";
 
 const formItemLayout = {
   labelCol: {
@@ -11,6 +12,7 @@ const formItemLayout = {
 };
 
 export default function WikiForm(props) {
+  const coloradoMode = useContext(ColoradoContext);
   return (
     <>
       <Form
@@ -59,7 +61,7 @@ export default function WikiForm(props) {
           <Button
             style={{
               margin: "5px",
-              backgroundColor: props.coloradoMode ? "#35647e" : "#1897ff",
+              backgroundColor: coloradoMode ? "#35647e" : "#1897ff",
               color: "white",
               float: "right",
               display: "inline-block",

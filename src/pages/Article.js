@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Spin, Button, Row, message } from "antd";
 import { useParams, Link, Redirect } from "react-router-dom";
 import { getContent, putContent } from "../requests/requests";
 import WikiForm from "../components/WikiForm";
+import { ColoradoContext } from "../contexts/Context.js";
 
 export default function Article(props) {
   const [content, setContent] = useState(null);
@@ -14,6 +15,7 @@ export default function Article(props) {
   const [topicEditable, setTopicEditable] = useState(false);
   const [newSection, setNewSection] = useState([]);
   let { topic } = useParams();
+  const coloradoMode = useContext(ColoradoContext);
 
   useEffect(() => {
     if (topic !== oldTopic) {
@@ -133,9 +135,7 @@ export default function Article(props) {
 
   return (
     <>
-      <div
-        className={props.coloradoMode ? "container coloradoIndex" : "container"}
-      >
+      <div className={coloradoMode ? "container coloradoIndex" : "container"}>
         <Spin className="spinner" spinning={loading}>
           {!content && topic && !loading && (
             <div style={{ padding: "10px" }}>
@@ -170,11 +170,10 @@ export default function Article(props) {
               buttonText="Edit topic"
               initialValues={{ topic: topic }}
               cancel={() => setTopicEditable(false)}
-              coloradoMode={props.coloradoMode}
             ></WikiForm>
           )}
 
-          <p className={props.coloradoMode ? "coloradoContent" : "content"}>
+          <p className={coloradoMode ? "coloradoContent" : "content"}>
             {content && content.introduction}
           </p>
           {content && !editable && newSection.length > 0 && (
@@ -184,7 +183,6 @@ export default function Article(props) {
               formLabel={["Header", "Body"]}
               repeatFormItems={newSection}
               buttonText={`Edit ${topic}`}
-              coloradoMode={props.coloradoMode}
               cancel={() => setNewSection([])}
             ></WikiForm>
           )}
@@ -230,7 +228,6 @@ export default function Article(props) {
                       buttonText={`Edit ${topic}`}
                       initialValues={{ body: c["body"], header: c["header"] }}
                       cancel={() => setEditable(false)}
-                      coloradoMode={props.coloradoMode}
                     ></WikiForm>
                   )}
                 </div>
@@ -240,7 +237,7 @@ export default function Article(props) {
             <Button
               style={{
                 margin: "5px",
-                backgroundColor: props.coloradoMode ? "#35647e" : "#1897ff",
+                backgroundColor: coloradoMode ? "#35647e" : "#1897ff",
                 color: "white",
               }}
               type="primary"
@@ -258,7 +255,7 @@ export default function Article(props) {
             <Button
               style={{
                 margin: "5px",
-                backgroundColor: props.coloradoMode ? "#35647e" : "#1897ff",
+                backgroundColor: coloradoMode ? "#35647e" : "#1897ff",
                 color: "white",
               }}
               type="primary"
@@ -292,7 +289,6 @@ export default function Article(props) {
                     onFinish={onCategoryFinish}
                     formLabel={["Category"]}
                     buttonText="Add Category"
-                    coloradoMode={props.coloradoMode}
                   ></WikiForm>
                 )}
               </div>
