@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Spin, Card, message } from "antd";
 import { useParams } from "react-router-dom";
 import { getHistory } from "../requests/requests";
@@ -6,10 +6,10 @@ import moment from "moment";
 
 export default function History(props) {
   let { topic } = useParams();
-  const [history, setHistory] = React.useState(null);
-  const [loading, setLoading] = React.useState(false);
+  const [history, setHistory] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!history) {
       init();
     }

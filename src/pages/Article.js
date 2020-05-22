@@ -1,21 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Spin, Button, Row, message } from "antd";
 import { useParams, Link, Redirect } from "react-router-dom";
 import { getContent, putContent } from "../requests/requests";
 import WikiForm from "../components/WikiForm";
 
 export default function Article(props) {
-  const [content, setContent] = React.useState(null);
-  const [oldTopic, setOldTopic] = React.useState(null);
-  const [currentIndex, setCurrentIndex] = React.useState(null);
-  const [loading, setLoading] = React.useState(false);
-  const [editable, setEditable] = React.useState(false);
-  const [redirectToFixedTopic, setRedirectToFixedTopic] = React.useState(null);
-  const [topicEditable, setTopicEditable] = React.useState(false);
-  const [newSection, setNewSection] = React.useState([]);
+  const [content, setContent] = useState(null);
+  const [oldTopic, setOldTopic] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [editable, setEditable] = useState(false);
+  const [redirectToFixedTopic, setRedirectToFixedTopic] = useState(null);
+  const [topicEditable, setTopicEditable] = useState(false);
+  const [newSection, setNewSection] = useState([]);
   let { topic } = useParams();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (topic !== oldTopic) {
       init();
     }

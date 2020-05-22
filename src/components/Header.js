@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, Redirect, useLocation } from "react-router-dom";
 import { Tabs, Row, Col, Input, Button } from "antd";
 const { TabPane } = Tabs;
 
 export default function Header(props) {
-  const [searchValue, setSearchValue] = React.useState("");
-  const [leftActiveKey, setLeftActiveKey] = React.useState("0");
-  const [rightActiveKey, setRightActiveKey] = React.useState("0");
+  const [searchValue, setSearchValue] = useState("");
+  const [leftActiveKey, setLeftActiveKey] = useState("0");
+  const [rightActiveKey, setRightActiveKey] = useState("0");
   const { Search } = Input;
   let location = useLocation();
   let path = location.pathname;

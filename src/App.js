@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import COFlag from "./assets/COFlag.png";
 import "./App.css";
 import { Route, Switch, Link } from "react-router-dom";
@@ -20,10 +20,10 @@ function App(props) {
 }
 
 function AppRouter() {
-  const [coloradoMode, setColoradoMode] = React.useState(false);
-  const [currentTopic, setCurrentTopic] = React.useState(null);
+  const [coloradoMode, setColoradoMode] = useState(false);
+  const [currentTopic, setCurrentTopic] = useState(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (coloradoMode) {
       document.body.style = "background-color: #00529C;";
     } else {

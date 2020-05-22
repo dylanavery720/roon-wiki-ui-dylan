@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Input, Button, message } from "antd";
 import { useParams, Redirect } from "react-router-dom";
 import { postContent } from "../requests/requests";
 
 export default function Create(props) {
   let { topic } = useParams();
-  const [success, setSuccess] = React.useState(false);
+  const [success, setSuccess] = useState(false);
 
   const onFinish = async (values) => {
     let body = {
