@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Row, Col, Card } from "antd";
 import { Link } from "react-router-dom";
 import { getAllArticles } from "../requests/requests";
@@ -6,7 +6,7 @@ import { getAllArticles } from "../requests/requests";
 export default function Index(props) {
   // TODO: Generate this data at the API level every day and display new cards dynamically.
 
-  React.useEffect(() => {
+  useEffect(() => {
     getAllArticles();
   });
 

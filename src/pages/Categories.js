@@ -1,29 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Spin, message } from "antd";
 import { Link } from "react-router-dom";
 import { getAllArticles } from "../requests/requests";
 
 export default function Categories(props) {
-  const [articles, setArticles] = React.useState(null);
-  const [categories, setCategories] = React.useState([]);
-  const [loading, setLoading] = React.useState(false);
+  const [articles, setArticles] = useState(null);
+  const categories = useCategories(articles);
+  const [loading, setLoading] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!articles && !loading) {
       init();
-    }
-    if (articles) {
-      articles.map((article) => {
-        if (!article.category) {
-          return null;
-        }
-        if (categories.includes(article.category)) {
-          return null;
-        } else {
-          setCategories([...categories, article.category]);
-          return null;
-        }
-      });
     }
   });
 
@@ -77,4 +64,26 @@ export default function Categories(props) {
       </div>
     </>
   );
+}
+
+function useCategories(articles) {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    if (articles) {
+      articles.map((article) => {
+        if (!article.category) {
+          return null;
+        }
+        if (categories.includes(article.category)) {
+          return null;
+        } else {
+          setCategories([...categories, article.category]);
+          return null;
+        }
+      });
+    }
+  });
+
+  return categories;
 }
