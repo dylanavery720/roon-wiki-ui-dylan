@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import COFlag from "./assets/COFlag.png";
-import "./App.css";
+import "./App.scss";
 import { Route, Switch, Link } from "react-router-dom";
 import { Switch as AntSwitch } from "antd";
 import Index from "./pages/Index";

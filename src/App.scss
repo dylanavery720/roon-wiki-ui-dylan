@@ -1,22 +1,23 @@
-.App-logo {
+@import "./Colors.scss";
+
+@mixin alignCenter {
   text-align: center;
   margin: 20px;
+}
+
+.App-logo {
+  @include alignCenter();
 }
 
 .Header-row {
   justify-content: space-between;
-  background-color: #f6f6f6;
+  background-color: $lightestGrey;
   align-items: center;
-}
-
-.Header-row:hover {
-  color: #ffd100;
 }
 
 .Index-card {
   padding: 8px;
-  margin: 20px;
-  text-align: center;
+  @include alignCenter();
 }
 .ant-card-body > img {
   display: block;
@@ -28,7 +29,7 @@
 }
 
 .editable {
-  color: #1890ff;
+  color: $link;
   cursor: pointer;
 }
 
@@ -37,7 +38,7 @@
 }
 
 .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab-active a h2 {
-  color: #1890ff;
+  color: $link;
   background: #fff;
 }
 
@@ -57,7 +58,7 @@ h2 {
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #f6f6f6;
+  background-color: $lightestGrey;
   overflow-x: hidden;
   padding-top: 20px;
 }
@@ -74,43 +75,33 @@ h2 {
   margin-left: 160px;
 }
 
-.coloradoIndex .ant-form label {
-  color: white;
-}
-
-.coloradoSideNav {
-  background-color: #00529c;
-}
-
 .coloradoSideNav a,
 .coloradoIndex .editable,
 .coloradoIndex a {
-  color: #ffd100;
+  color: $yellow;
 }
 
 .coloradoIndex .infobox {
-  background-color: #5c666f;
-}
-
-.coloradoIndex .infobox span {
-  color: white;
-}
-
-.coloradoIndex h1,
-.coloradoIndex h2,
-.coloradoIndex div > p,
-.coloradoIndex b,
-.coloradoIndex div.ant-card-head-title {
-  color: white;
+  background-color: $grey;
 }
 
 .coloradoIndex {
-  background-color: #00529c;
+  .infobox span,
+  h1,
+  h2,
+  div > p,
+  b,
+  div.ant-card-head-title,
+  .ant-form label {
+    color: white;
+  }
 }
 
+.coloradoIndex,
+.coloradoSideNav,
 .coloradoIndex a,
 .coloradoIndex p {
-  background-color: #00529c;
+  background-color: $coloradoBackground;
 }
 
 .infobox {
@@ -121,5 +112,5 @@ h2 {
 }
 
 .ant-switch-checked {
-  background-color: #35647e;
+  background-color: $rightMountainTeal;
 }
